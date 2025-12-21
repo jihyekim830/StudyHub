@@ -1,8 +1,14 @@
-import { useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router";
 import UserMenu from "@/components/header/UserMenu";
 import { HeaderLogo } from "@/assets/images/logo-images";
+import { useAuthStore } from "@/store/useAuthStore";
+
+interface HeaderLinkProps {
+  to: string;
+  children: ReactNode;
+  className?: string;
+}
 
 const HeaderLink = ({ to, children }: HeaderLinkProps) => (
   <Link
@@ -13,13 +19,8 @@ const HeaderLink = ({ to, children }: HeaderLinkProps) => (
   </Link>
 );
 
-interface HeaderLinkProps {
-  to: string;
-  children: ReactNode;
-}
-
 export default function Header() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, deleteAccessToken } = useAuthStore();
 
   return (
     <header className="sticky top-0 z-20 border-b border-gray-200 bg-white">
@@ -46,19 +47,12 @@ export default function Header() {
 
           <div className="hidden items-center space-x-4 md:flex">
             {isLoggedIn ? (
-              <UserMenu onLogout={() => setIsLoggedIn(false)} />
+              <UserMenu onLogout={deleteAccessToken} />
             ) : (
               <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => setIsLoggedIn(true)}
-                  className="px-4 py-2 font-medium text-gray-700 transition-colors hover:text-blue-600"
-                >
-                  로그인
-                </button>
+                <HeaderLink to="/login">로그인</HeaderLink>
                 <span className="text-gray-300">|</span>
-                <button className="px-4 py-2 font-medium text-gray-700 transition-colors hover:text-blue-600">
-                  회원가입
-                </button>
+                <HeaderLink to="/signup">회원가입</HeaderLink>
               </div>
             )}
           </div>

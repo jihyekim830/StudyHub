@@ -11,4 +11,7 @@ export const API_PATHS = {
         `${API_PREFIX}/exams/deployments/${deploymentId}/check-code`,
     },
   },
+  accounts: {
+    login: `${API_PREFIX}/accounts/login`,
+  },
 } as const;

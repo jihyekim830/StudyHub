@@ -1,0 +1,28 @@
+import { http, HttpResponse, type PathParams } from "msw";
+import { mockLoginResponse } from "@/mocks/data/auth";
+import { API_PATHS, MSW_BASE_URL } from "@/constants";
+import type { LoginRequest } from "@/types/api-request-type/auth-request-type";
+import type {
+  LoginResponse,
+  ErrorResponse,
+} from "@/types/api-response-type/auth-response-type";
+
+const loginHandler = http.post<
+  PathParams,
+  LoginRequest,
+  LoginResponse | ErrorResponse
+>(`${MSW_BASE_URL}${API_PATHS.accounts.login}`, async ({ request }) => {
+  const requestBody = await request.json();
+  const { email, password } = requestBody;
+
+  if (email === "test@gmail.com" && password === "1234") {
+    return HttpResponse.json(mockLoginResponse, { status: 200 });
+  }
+
+  return HttpResponse.json(
+    { message: "아이디 또는 비밀번호가 일치하지 않습니다." },
+    { status: 401 }
+  );
+});
+
+export const authHandlers = [loginHandler];

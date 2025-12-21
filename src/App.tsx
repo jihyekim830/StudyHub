@@ -2,6 +2,7 @@ import { RootLayout } from "@/components/layout";
 import { Exams, Home } from "@/pages";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { NotFound } from "@/components/common/not-found";
+import { LoginPage, SignupPage } from "@/pages";
 
 function App() {
   return (
@@ -12,8 +13,15 @@ function App() {
           <Route path="/community" element={<div>커뮤니티 페이지</div>} />
           <Route path="/qna" element={<div>질의응답 페이지</div>} />
           <Route path="/profile" element={<div>수강생 등록 페이지</div>} />
-          <Route path="/my-page" />
           <Route path="/my-page/exams" element={<Exams />} />
+          <Route path="/my-page" element={<div>마이페이지</div>} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route
+            path="/email-signup"
+            element={<div>일반회원 가입 페이지</div>}
+          />
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         {/* TODO 레이아웃, 페이지 컴포넌트로 변경하기 */}
