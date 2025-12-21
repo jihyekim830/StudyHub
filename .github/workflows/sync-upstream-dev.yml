@@ -15,7 +15,7 @@ jobs:
         with:
           ref: dev
           fetch-depth: 0
-          
+
       - name: Configure Git
         run: |
           git config --global user.name "GitHub Actions"
@@ -33,9 +33,7 @@ jobs:
         run: git fetch upstream
 
       - name: Merge upstream/dev into fork/dev
-        run: |
-          git switch dev
-          git merge upstream/dev --no-edit
+        run: git merge upstream/dev --no-edit
 
       - name: Push fork dev
         run: git push origin dev
