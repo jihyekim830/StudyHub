@@ -49,9 +49,9 @@ export default function Header() {
             {isLoggedIn ? (
               <UserMenu onLogout={deleteAccessToken} />
             ) : (
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center">
                 <HeaderLink to="/login">로그인</HeaderLink>
-                <span className="text-gray-300">|</span>
+                <span className="px-4 text-gray-300">|</span>
                 <HeaderLink to="/signup">회원가입</HeaderLink>
               </div>
             )}

@@ -1,5 +1,6 @@
 import { cn, inputContainerVariants } from "@/lib";
-import { type InputHTMLAttributes, useState } from "react";
+import type { InputHTMLAttributes, ChangeEvent } from "react";
+import { useState } from "react";
 import { type VariantProps } from "class-variance-authority";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 
@@ -21,11 +22,18 @@ const PasswordInput = ({
   errorMessage,
   successMessage,
   ref,
+  onChange,
   ...props
 }: PasswordInputProps) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [hasValue, setHasValue] = useState(false);
 
   const toggleVisibility = () => setIsVisible((prev) => !prev);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setHasValue(e.target.value.length > 0);
+    if (onChange) onChange(e);
+  };
 
   const currentVariant = errorMessage
     ? "danger"
@@ -41,23 +49,25 @@ const PasswordInput = ({
           type={isVisible ? "text" : "password"}
           className={cn(
             "w-full border-none bg-transparent px-4 py-3 text-sm outline-none placeholder:text-neutral-400 disabled:cursor-not-allowed",
-            currentVariant === "danger" && "placeholder:text-danger",
-            inputClassName
+            currentVariant === "danger" && inputClassName
           )}
+          onChange={handleInputChange}
           {...props}
         />
 
-        <button
-          type="button"
-          onClick={toggleVisibility}
-          className="pr-3 text-neutral-400 hover:text-neutral-600 focus:outline-none"
-        >
-          {isVisible ? (
-            <EyeIcon className="h-5 w-5" />
-          ) : (
-            <EyeOffIcon className="h-5 w-5" />
-          )}
-        </button>
+        {hasValue && (
+          <button
+            type="button"
+            onClick={toggleVisibility}
+            className="pr-3 text-neutral-400 hover:text-neutral-600 focus:outline-none"
+          >
+            {isVisible ? (
+              <EyeIcon className="h-5 w-5" />
+            ) : (
+              <EyeOffIcon className="h-5 w-5" />
+            )}
+          </button>
+        )}
       </div>
 
       {errorMessage && (

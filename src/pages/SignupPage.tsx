@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import HeaderLogo from "@/assets/images/logo-images/header-logo.png";
+import HeaderLogo from "@/assets/images/logo-images/header-logo.svg";
 import { KakaoLoginButton, NaverLoginButton } from "@/components/auth";
 
 export default function SignupPage() {

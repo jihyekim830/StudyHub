@@ -33,8 +33,7 @@ const Input = ({
           ref={ref}
           className={cn(
             "w-full border-none bg-transparent px-4 py-3 text-sm outline-none placeholder:text-neutral-400 disabled:cursor-not-allowed",
-            currentVariant === "danger" && "placeholder:text-danger",
-            inputClassName
+            currentVariant === "danger" && inputClassName
           )}
           {...props}
         />

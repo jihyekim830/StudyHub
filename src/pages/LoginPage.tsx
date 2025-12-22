@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router";
 import { Input, Button, Password } from "@/components/common";
 import { LoginSchema, type LoginSchemaType } from "@/schemas/authSchemas";
-import HeaderLogo from "@/assets/images/logo-images/header-logo.png";
+import HeaderLogo from "@/assets/images/logo-images/header-logo.svg";
 import { KakaoLoginButton, NaverLoginButton } from "@/components/auth";
 import { useLoginMutation } from "@/hooks/useLogin";
 

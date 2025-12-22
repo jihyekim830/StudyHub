@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const inputContainerVariants = cva(
-  "flex items-center w-full rounded-md border-2 bg-white transition-all duration-200",
+  "flex items-center w-full rounded-md border bg-white transition-all duration-200",
   {
     variants: {
       variant: {
