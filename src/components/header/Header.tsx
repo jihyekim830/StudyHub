@@ -1,23 +1,8 @@
-import type { ReactNode } from "react";
 import { Link } from "react-router";
 import UserMenu from "@/components/header/UserMenu";
 import { HeaderLogo } from "@/assets/images/logo-images";
 import { useAuthStore } from "@/store/useAuthStore";
-
-interface HeaderLinkProps {
-  to: string;
-  children: ReactNode;
-  className?: string;
-}
-
-const HeaderLink = ({ to, children }: HeaderLinkProps) => (
-  <Link
-    to={to}
-    className="font-medium text-gray-700 transition-colors hover:text-violet-600"
-  >
-    {children}
-  </Link>
-);
+import { HeaderLink } from "@/components/header/HeaderLink";
 
 export default function Header() {
   const { isLoggedIn, deleteAccessToken } = useAuthStore();

@@ -1,7 +1,9 @@
 import ModalOverlay from "@/components/common/modal/ModalOverlay";
-import type { ModalContent, ModalTrigger } from "@/components/common/modal";
+import { ModalContent, ModalTrigger } from "@/components/common/modal";
 import { ModalContext } from "@/hooks";
-import { useState, type ReactElement } from "react";
+import React, { useState, type ReactElement } from "react";
+import { createPortal } from "react-dom";
+import type { ModalContextType } from "@/types";
 
 type ModalChildren =
   | ReactElement<typeof ModalTrigger>
@@ -10,16 +12,41 @@ type ModalChildren =
 interface ModalProps {
   children: ModalChildren | ModalChildren[];
   isOverlay?: boolean;
+  externalModalControl?: ModalContextType;
 }
 
-export default function Modal({ children, isOverlay = true }: ModalProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Modal({
+  children,
+  isOverlay = true,
+  externalModalControl,
+}: ModalProps) {
+  const [isInternalOpen, setIsInternalOpen] = useState(false);
 
-  const open = () => setIsOpen(true);
+  const isOpen = externalModalControl
+    ? externalModalControl.isOpen
+    : isInternalOpen;
 
-  const close = () => setIsOpen(false);
+  const open = externalModalControl
+    ? externalModalControl.open
+    : () => setIsInternalOpen(true);
 
-  const toggle = () => setIsOpen((prev) => !prev);
+  const close = externalModalControl
+    ? externalModalControl.close
+    : () => setIsInternalOpen(false);
+
+  const toggle = externalModalControl
+    ? externalModalControl.toggle
+    : () => setIsInternalOpen((prev) => !prev);
+
+  const modalRoot = document.getElementById("modal-root")!;
+
+  const trigger = React.Children.map(children, (child) =>
+    child.type === ModalTrigger ? child : null
+  );
+
+  const content = React.Children.map(children, (child) =>
+    child.type === ModalContent ? child : null
+  );
 
   return (
     <ModalContext.Provider
@@ -30,8 +57,15 @@ export default function Modal({ children, isOverlay = true }: ModalProps) {
         toggle,
       }}
     >
-      {isOverlay ? <ModalOverlay /> : null}
-      <div>{children}</div>
+      {trigger}
+      {isOpen &&
+        createPortal(
+          <>
+            {isOverlay ? <ModalOverlay /> : null}
+            {content}
+          </>,
+          modalRoot
+        )}
     </ModalContext.Provider>
   );
 }

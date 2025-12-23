@@ -1,5 +1,5 @@
 import { http, HttpResponse, type PathParams } from "msw";
-import { mockLoginResponse } from "@/mocks/data/auth";
+import { mockLoginResponse } from "@/mocks/data/auth-data";
 import { API_PATHS, MSW_BASE_URL } from "@/constants";
 import type { LoginRequest } from "@/types/api-request-type/auth-request-type";
 import type {
