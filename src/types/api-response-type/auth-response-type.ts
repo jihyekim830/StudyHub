@@ -14,3 +14,10 @@ export interface LoginResponse {
 export interface ErrorResponse {
   message: string;
 }
+
+export interface ExpiredAccountErrorResponse {
+  error_detail: {
+    detail: string;
+    expire_at: string;
+  };
+}

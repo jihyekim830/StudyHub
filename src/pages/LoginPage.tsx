@@ -6,9 +6,33 @@ import { LoginSchema, type LoginSchemaType } from "@/schemas/authSchemas";
 import HeaderLogo from "@/assets/images/logo-images/header-logo.svg";
 import { KakaoLoginButton, NaverLoginButton } from "@/components/auth";
 import { useLoginMutation } from "@/hooks/useLogin";
+import { useExternalModalController } from "@/hooks";
+import { AccountRestoreModal } from "@/components";
+import { useState } from "react";
 
 export default function LoginPage() {
-  const { mutate: loginFn, isPending, isError, error } = useLoginMutation();
+  const accountRestoreModalControl = useExternalModalController();
+
+  const [expiredDate, setExpiredDate] = useState<Date>();
+
+  const {
+    mutate: loginFn,
+    isPending,
+    isError,
+  } = useLoginMutation({
+    onError: (error) => {
+      if (
+        error.response &&
+        error.response.status === 403 &&
+        error.response.data &&
+        "error_detail" in error.response.data &&
+        "expire_at" in error.response.data.error_detail
+      ) {
+        setExpiredDate(new Date(error.response.data.error_detail.expire_at));
+        accountRestoreModalControl.open();
+      }
+    },
+  });
 
   const {
     register,
@@ -25,6 +49,11 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center py-12 sm:px-6 lg:px-8">
+      <AccountRestoreModal
+        externalModalControl={accountRestoreModalControl}
+        expiredAt={expiredDate || new Date()}
+      />
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link to="/" className="flex justify-center">
           <img src={HeaderLogo} alt="OZ Coding School" />
@@ -80,7 +109,7 @@ export default function LoginPage() {
 
             {isError && (
               <div className="mb-2 text-center text-sm font-medium text-red-500">
-                {error?.response?.data?.message || "로그인에 실패했습니다."}
+                {"로그인에 실패했습니다."}
               </div>
             )}
 

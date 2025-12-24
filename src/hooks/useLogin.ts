@@ -7,11 +7,12 @@ import type { LoginRequest } from "@/types/api-request-type/auth-request-type";
 import type {
   LoginResponse,
   ErrorResponse,
+  ExpiredAccountErrorResponse,
 } from "@/types/api-response-type/auth-response-type";
 
 type LoginMutationOptions = UseMutationOptions<
   LoginResponse,
-  AxiosError<ErrorResponse>,
+  AxiosError<ErrorResponse | ExpiredAccountErrorResponse>,
   LoginRequest
 >;
 
@@ -30,13 +31,6 @@ export const useLoginMutation = (options?: LoginMutationOptions) => {
 
       if (options?.onSuccess) {
         options.onSuccess(data, variables, context);
-      }
-    },
-    onError: (error, variables, context) => {
-      console.log("로그인 실패...", error);
-
-      if (options?.onError) {
-        options.onError(error, variables, context);
       }
     },
   });

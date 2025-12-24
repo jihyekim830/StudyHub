@@ -23,5 +23,6 @@ export const API_PATHS = {
       sendSMS: `${VERIFICATION_API_PREFIX}/send-sms`,
       verfiySMS: `${VERIFICATION_API_PREFIX}/verify-sms`,
     },
+    me: `${API_PREFIX}/accounts/me`,
   },
 } as const;
