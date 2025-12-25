@@ -1,13 +1,37 @@
 import * as z from "zod";
 
+const emailPart = z.email({ message: "이메일 형식이 올바르지 않습니다." });
+
+const phoneParts = {
+  phone1: z.string().min(3, { message: "" }),
+  phone2: z.string().min(4, { message: "" }),
+  phone3: z.string().min(4, { message: "" }),
+};
+
+const verificationCodePart = z
+  .string()
+  .length(6, { message: "인증번호는 6자리여야 합니다." });
+
 export const LoginSchema = z.object({
-  email: z.email({ message: "이메일 형식이 올바르지 않습니다." }),
+  email: emailPart,
   password: z.string().min(1, { message: "비밀번호를 입력해주세요." }),
+});
+
+export const EmailVerificationSchema = z.object({
+  email: emailPart,
+  emailcode: verificationCodePart,
+});
+
+export const SMSVerificationSchema = z.object({
+  ...phoneParts,
+  smscode: verificationCodePart.regex(/^\d+$/, {
+    message: "숫자만 입력 가능합니다.",
+  }),
 });
 
 export const SignupSchema = z
   .object({
-    email: z.email({ message: "이메일 형식이 올바르지 않습니다." }),
+    email: emailPart,
     password: z
       .string()
       .min(8, { message: "비밀번호는 8자 이상이어야 합니다." })
@@ -22,15 +46,11 @@ export const SignupSchema = z
       .string()
       .min(1, { message: "닉네임을 입력해주세요." })
       .max(10, { message: "닉네임은 10자 이내여야 합니다." }),
-
     birthday: z.string().regex(/^\d{8}$/, {
       message: "생년월일은 8자리 숫자로 입력해주세요 (ex. 20001110)",
     }),
     gender: z.enum(["M", "F"]),
-
-    phone1: z.string().min(3, { message: "" }),
-    phone2: z.string().min(4, { message: "" }),
-    phone3: z.string().min(4, { message: "" }),
+    ...phoneParts,
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: "비밀번호가 일치하지 않습니다.",
@@ -39,3 +59,7 @@ export const SignupSchema = z
 
 export type LoginSchemaType = z.infer<typeof LoginSchema>;
 export type SignupSchemaType = z.infer<typeof SignupSchema>;
+export type EmailVerificationSchemaType = z.infer<
+  typeof EmailVerificationSchema
+>;
+export type SMSVerificationSchemaType = z.infer<typeof SMSVerificationSchema>;

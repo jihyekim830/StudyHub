@@ -14,7 +14,7 @@ import {
   ReactNativeIcon,
   TypescriptIcon,
 } from "@/assets/icons/subject-icons";
-import type { ExamCategoryOption } from "@/types";
+import type { ExamCategoryOption, QuestionType } from "@/types";
 
 export const EXAM_CATEGORY_OPTIONS: ExamCategoryOption[] = [
   { label: "전체보기", value: "all" },
@@ -37,4 +37,13 @@ export const EXAM_SUBJECT_ICON_MAP: Record<string, string> = {
   django: DjangoIcon,
   fastapi: FastapiIcon,
   flask: FlaskIcon,
+};
+
+export const EXAM_QUESTION_TYPE_LABEL_MAP: Record<QuestionType, string> = {
+  fill_blank: "빈칸식",
+  multiple_choice: "다중선택",
+  ordering: "순서배열",
+  ox: "OX선택",
+  short_answer: "단답형",
+  single_choice: "단일선택",
 };

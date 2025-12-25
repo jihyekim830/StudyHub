@@ -8,6 +8,7 @@ import AccountRestoreModal from "@/components/account-restore-modal/AccountResto
 import AccountRestoreAlertModal from "@/components/account-restore-modal/AccountRestoreAlertModal";
 import AccountRestoreFormModal from "@/components/account-restore-modal/AccountRestoreFormModal";
 import AccountRestoreCompleteModal from "@/components/account-restore-modal/AccountRestoreCompleteModal";
+import ExamQuestion from "@/components/question/ExamQuestion";
 
 export {
   Footer,
@@ -20,4 +21,5 @@ export {
   AccountRestoreAlertModal,
   AccountRestoreFormModal,
   AccountRestoreCompleteModal,
+  ExamQuestion,
 };

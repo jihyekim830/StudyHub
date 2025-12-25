@@ -33,3 +33,34 @@ export interface ExamListResponse {
   has_next: boolean;
   results: Exam[];
 }
+
+export type QuestionType =
+  | "single_choice"
+  | "multiple_choice"
+  | "ox"
+  | "short_answer"
+  | "ordering"
+  | "fill_blank";
+
+export interface Question {
+  question_id: number;
+  number: number;
+  type: QuestionType;
+  question: string;
+  point: number;
+  prompt: string | null;
+  blank_count: number | null;
+  options: string[] | null;
+  answer_input: string | string[] | null;
+}
+
+interface ExamQuestionContentProps {
+  question: Question;
+  value: string | string[] | null;
+  onChange: (
+    questionId: number,
+    submittedAnswer: string | string[] | null
+  ) => void;
+}
+
+export type ExamQuestionContentComponent = React.FC<ExamQuestionContentProps>;

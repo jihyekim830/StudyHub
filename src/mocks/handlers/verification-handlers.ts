@@ -44,7 +44,7 @@ const postVerifyEmail = http.post(
       );
     }
 
-    if (code !== "qwer1234") {
+    if (code !== "qwer12") {
       return HttpResponse.json(
         {
           error_detail: {
@@ -106,7 +106,7 @@ const postVerifySMS = http.post(
       );
     }
 
-    if (code !== "qwer1234") {
+    if (code !== "111111") {
       return HttpResponse.json(
         {
           error_detail: {
