@@ -37,7 +37,7 @@ const FillBlank = memo(function FillBlank({
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="w-3/5 rounded-sm bg-neutral-100 px-6.5 py-4">
+      <div className="w-3/5 rounded-sm bg-neutral-100 px-6.5 py-4 break-keep whitespace-pre-line">
         {promptParts.map((part, index) => (
           <span key={`${question.question_id}-prompt-${index}`}>
             {part}

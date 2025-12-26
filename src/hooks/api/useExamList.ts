@@ -1,4 +1,4 @@
-import type { ExamListResponse } from "@/types";
+import type { ExamListResponse } from "@/types/api-response-type/exam-response-types";
 import {
   useInfiniteQuery,
   type InfiniteData,

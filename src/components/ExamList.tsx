@@ -52,7 +52,7 @@ function ExamList({ exams }: ExamListProps) {
               <LinkButton
                 variant="outline"
                 className="flex h-12 w-28 items-center justify-center p-0 font-semibold"
-                to={`/exam/result/${submission_id}`}
+                to={`/exam/${id}/result/${submission_id}`}
               >
                 상세보기
               </LinkButton>

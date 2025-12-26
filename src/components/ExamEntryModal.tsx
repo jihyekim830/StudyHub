@@ -33,7 +33,8 @@ function ExamEntryModal({
   const handleExamStart = async () => {
     const isVerified = await verify(deploymentId, code);
 
-    if (isVerified) navigate(`/exam/start/${deploymentId}`);
+    if (isVerified)
+      navigate(`/exam/${deploymentId}`, { state: { durationTime } });
   };
 
   return (

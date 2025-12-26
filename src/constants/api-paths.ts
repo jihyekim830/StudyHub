@@ -1,3 +1,5 @@
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const MSW_BASE_URL = "https://msw.local";
 
 const API_PREFIX = "/api/v1";
@@ -11,6 +13,15 @@ export const API_PATHS = {
       list: (page: number) => `${API_PREFIX}/exams/deployments?page=${page}`,
       checkCode: (deploymentId: number) =>
         `${API_PREFIX}/exams/deployments/${deploymentId}/check-code`,
+      questionList: (deploymentId: number) =>
+        `${API_PREFIX}/exams/deployments/${deploymentId}`,
+      cheating: (deploymentId: number) =>
+        `${API_PREFIX}/exams/deployments/${deploymentId}/cheating`,
+      status: (deploymentId: number) =>
+        `${API_PREFIX}/exams/deployments/${deploymentId}/status`,
+    },
+    submissions: {
+      base: `${API_PREFIX}/exams/submissions`,
     },
   },
   accounts: {

@@ -3,5 +3,6 @@ import Exams from "@/pages/Exams";
 import LoginPage from "@/pages/LoginPage";
 import SignupPage from "@/pages/SignupPage";
 import EmailSignupPage from "@/pages/EmailSignupPage";
+import TakeExam from "@/pages/TakeExam";
 
-export { Home, LoginPage, SignupPage, EmailSignupPage, Exams };
+export { Home, LoginPage, SignupPage, EmailSignupPage, Exams, TakeExam };

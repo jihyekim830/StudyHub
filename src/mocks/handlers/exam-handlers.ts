@@ -1,17 +1,25 @@
 import { API_PATHS, MSW_BASE_URL } from "@/constants";
 import { http, HttpResponse } from "msw";
-import { examList } from "@/mocks/data/exam-data";
-import type { ExamListResponse } from "@/types";
+import { cheatingState, examList, questionList } from "@/mocks/data/exam-data";
+import type {
+  ExamCheatingResponse,
+  ExamListResponse,
+  ExamQuestionListResponse,
+  ExamStatusResponse,
+  ExamSubmitResponse,
+} from "@/types/api-response-type/exam-response-types";
+import type { ExamCheatingRequest } from "@/types/api-request-type/exam-request-types";
 
 const PAGE_SIZE = 5;
 const LAST_PAGE = 10;
 const getExamListResponse = (page: number): ExamListResponse => {
   const results = Array.from({ length: PAGE_SIZE }, (_, index) => {
     const exam = examList[index % examList.length];
+    const id = page === 1 ? index : index + PAGE_SIZE * page;
 
     return {
       ...exam,
-      id: Date.now() + exam.id, // 유니크한 임의의 아이디 생성
+      id,
     };
   });
 
@@ -51,4 +59,85 @@ const checkExamCode = http.post(
   }
 );
 
-export const examHandlers = [getExamList, checkExamCode];
+const getExamQuestionList = http.get(
+  `${MSW_BASE_URL}${API_PATHS.exams.deployments.base}/:deploymentId`,
+  ({ params }) => {
+    const { deploymentId } = params;
+
+    if (deploymentId === "1")
+      return HttpResponse.json<ExamQuestionListResponse>({
+        exam_id: 1,
+        exam_name: "TypeScript 기본 문법 테스트",
+        duration_time: 30,
+        elapsed_time: 0,
+        cheating_count: 0,
+        questions: questionList,
+      });
+    return HttpResponse.json(
+      { error_detail: "해당 시험 정보를 찾을 수 없습니다." },
+      { status: 404 }
+    );
+  }
+);
+
+const reportExamCheating = http.post(
+  `${MSW_BASE_URL}${API_PATHS.exams.deployments.base}/:deploymentId/cheating`,
+  async ({ request }) => {
+    const { event } = (await request.json()) as ExamCheatingRequest;
+
+    if (event !== "focus_out")
+      return HttpResponse.json(
+        { error_detail: "유효하지 않은 시험 응시 세션입니다." },
+        { status: 400 }
+      );
+
+    cheatingState.cheating_count++;
+    if (cheatingState.cheating_count > 2)
+      cheatingState.is_forced_submitted = true;
+
+    return HttpResponse.json<ExamCheatingResponse>(cheatingState);
+  }
+);
+
+const checkExamStatus = http.get(
+  `${MSW_BASE_URL}${API_PATHS.exams.deployments.base}/:deploymentId/status`,
+  () => {
+    return HttpResponse.json<ExamStatusResponse>({
+      exam_status: "activated",
+      force_submit: false,
+    });
+
+    // deactivated 테스트 코드
+    // return HttpResponse.json<ExamStatusResponse>({
+    //   exam_status: "deactivated",
+    //   force_submit: true,
+    // });
+  }
+);
+
+const submitExam = http.post(
+  `${MSW_BASE_URL}${API_PATHS.exams.submissions.base}`,
+  () => {
+    return HttpResponse.json<ExamSubmitResponse>({
+      submission_id: 350,
+      score: 85,
+      correct_answer_count: 17,
+      redirect_url: "/exam/result/350",
+    });
+
+    // 에러 테스트 코드
+    // return HttpResponse.json(
+    //   { error_detail: "자격 인증 데이터가 제공되지 않았습니다." },
+    //   { status: 401 }
+    // );
+  }
+);
+
+export const examHandlers = [
+  getExamList,
+  checkExamCode,
+  getExamQuestionList,
+  reportExamCheating,
+  checkExamStatus,
+  submitExam,
+];

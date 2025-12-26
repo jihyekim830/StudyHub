@@ -23,7 +23,9 @@ function ExamQuestion({ question, value, onChange }: ExamQuestionProps) {
       <div className="flex items-start gap-4">
         <div className="flex max-w-4/5 gap-3 text-xl font-bold">
           <span>{question.number}.</span>
-          <span className="tracking-tighter">{question.question}</span>
+          <span className="tracking-tighter break-keep">
+            {question.question}
+          </span>
         </div>
         <div className="mt-0.5 flex gap-2 text-xs font-semibold">
           <div className={cn("px-2", BADGE_BASE)}>{question.point}점</div>

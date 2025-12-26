@@ -1,7 +1,14 @@
 import { RootLayout } from "@/components/layout";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { NotFound } from "@/components/common/not-found";
-import { LoginPage, SignupPage, EmailSignupPage, Exams, Home } from "@/pages";
+import {
+  LoginPage,
+  SignupPage,
+  EmailSignupPage,
+  Exams,
+  Home,
+  TakeExam,
+} from "@/pages";
 
 function App() {
   return (
@@ -20,14 +27,11 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
 
-        {/* TODO 레이아웃, 페이지 컴포넌트로 변경하기 */}
-        <Route path="/exam" element={<div>쪽지시험 레이아웃</div>}>
+        <Route path="/exam">
+          <Route path=":deploymentId" element={<TakeExam />} />
+          {/* TODO 페이지 컴포넌트로 변경하기 */}
           <Route
-            path="start/:deploymentId"
-            element={<div>쪽지시험 응시</div>}
-          />
-          <Route
-            path="result/:submissionId"
+            path=":deploymentId/result/:submissionId"
             element={<div>쪽지시험 결과</div>}
           />
         </Route>
