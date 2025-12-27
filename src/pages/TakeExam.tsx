@@ -10,10 +10,11 @@ import {
   useExamAnswers,
   useExamCheatingModal,
   useExamCheatingStatus,
+  useExamStatusControl,
   useExamSubmitControl,
   useExamTimer,
 } from "@/hooks";
-import { useExamStatusPolling, useExamQuestionList } from "@/hooks/api";
+import { useExamQuestionList } from "@/hooks/api";
 import { cn } from "@/lib";
 import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
@@ -44,12 +45,9 @@ function TakeExam() {
   const { cheatingCount, isForcedSubmitted } =
     useExamCheatingStatus(deploymentId);
   const { modalControl } = useExamCheatingModal(cheatingCount);
-  const { data: examStatus } = useExamStatusPolling(deploymentId);
+  useExamStatusControl(deploymentId);
 
-  const shouldForceSubmit =
-    hasTimedOut ||
-    isForcedSubmitted ||
-    (examStatus?.exam_status ?? null) === "deactivated";
+  const shouldForceSubmit = hasTimedOut || isForcedSubmitted;
   const { submit, isPending } = useExamSubmitControl(
     startedAt,
     cheatingCount,

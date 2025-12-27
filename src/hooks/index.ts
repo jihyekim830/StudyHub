@@ -9,6 +9,7 @@ import useExamCheatingStatus from "@/hooks/useExamCheatingStatus";
 import useExamCheatingModal from "@/hooks/useExamCheatingModal";
 import useExamAnswers from "@/hooks/useExamAnswers";
 import useExamSubmitControl from "@/hooks/useExamSubmitControl";
+import useExamStatusControl from "@/hooks/useExamStatusControl";
 
 export {
   useToast,
@@ -23,4 +24,5 @@ export {
   useExamCheatingModal,
   useExamAnswers,
   useExamSubmitControl,
+  useExamStatusControl,
 };

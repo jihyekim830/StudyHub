@@ -9,7 +9,7 @@ export default function BigToast({ bigToast }: BigToastProps) {
   const { status, title, text } = bigToast;
 
   return (
-    <div className="flex flex-col items-center justify-center gap-10 rounded-xl border border-neutral-400 p-8 shadow-lg">
+    <div className="flex min-w-3xs flex-col items-center justify-center gap-10 rounded-xl border border-neutral-400 bg-neutral-100 p-8 shadow-lg">
       {status === "success" ? (
         <CheckIcon className="bg-success size-8 rounded-full p-1 text-white" />
       ) : (
