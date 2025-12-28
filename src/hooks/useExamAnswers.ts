@@ -6,6 +6,10 @@ type AnswerState = Record<number, Answer>;
 function useExamAnswers(questions: Question[] | null) {
   const [answers, setAnswers] = useState<AnswerState>({});
 
+  const hasUnansweredQuestions = Object.values(answers).some(
+    (answer) => answer.submittedAnswer === null
+  );
+
   const handleAnswerChange = useCallback(
     (questionId: number, submittedAnswer: Answer["submittedAnswer"]) =>
       setAnswers((prev) => ({
@@ -28,7 +32,7 @@ function useExamAnswers(questions: Question[] | null) {
     setAnswers(initialState);
   }, [questions]);
 
-  return { answers, handleAnswerChange };
+  return { answers, hasUnansweredQuestions, handleAnswerChange };
 }
 
 export default useExamAnswers;

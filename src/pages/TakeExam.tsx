@@ -13,6 +13,7 @@ import {
   useExamStatusControl,
   useExamSubmitControl,
   useExamTimer,
+  useToast,
 } from "@/hooks";
 import { useExamQuestionList } from "@/hooks/api";
 import { cn } from "@/lib";
@@ -25,6 +26,7 @@ const EXAM_INFO_BADGE_BASE =
 
 function TakeExam() {
   const [isPopUpOpen, setIsPopUpOpen] = useState(true);
+  const { triggerToast } = useToast();
 
   const params = useParams();
   const { state } = useLocation();
@@ -37,9 +39,8 @@ function TakeExam() {
     isError,
     error,
   } = useExamQuestionList(deploymentId, durationTime);
-  const { answers, handleAnswerChange } = useExamAnswers(
-    examDto?.questions ?? null
-  );
+  const { answers, hasUnansweredQuestions, handleAnswerChange } =
+    useExamAnswers(examDto?.questions ?? null);
 
   const { startedAt, remainingMs, hasTimedOut } = useExamTimer(durationTime);
   const { cheatingCount, isForcedSubmitted } =
@@ -55,6 +56,20 @@ function TakeExam() {
     shouldForceSubmit,
     deploymentId
   );
+
+  const handleExamSubmit = () => {
+    if (!hasUnansweredQuestions) {
+      submit();
+      return;
+    }
+
+    triggerToast({
+      variant: "big",
+      title: "답안 제출 실패",
+      text: "모든 문항에 정답을 입력해 주세요.",
+      status: "danger",
+    });
+  };
 
   if (isLoading)
     return <LoadingUi className="mx-auto mt-96 flex w-full justify-center" />;
@@ -106,7 +121,7 @@ function TakeExam() {
       <div className="flex pt-58.5 pb-24.5">
         <Button
           className="mx-auto h-16 w-31 p-0 text-lg"
-          onClick={submit}
+          onClick={handleExamSubmit}
           disabled={isPending}
         >
           제출하기

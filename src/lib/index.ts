@@ -6,6 +6,7 @@ import {
 } from "@/lib/utils";
 import api from "@/lib/axios";
 import { buttonVariants } from "@/lib/buttonVariant";
+import { transformUserInfo } from "@/lib/authUtils";
 
 export {
   inputContainerVariants,
@@ -14,4 +15,5 @@ export {
   buttonVariants,
   createCohortsDropdownOptions,
   createCoursesDropdownOptions,
+  transformUserInfo,
 };

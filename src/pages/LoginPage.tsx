@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router";
@@ -8,7 +9,6 @@ import { KakaoLoginButton, NaverLoginButton } from "@/components/auth";
 import { useLoginMutation } from "@/hooks/useLogin";
 import { useExternalModalController } from "@/hooks";
 import { AccountRestoreModal } from "@/components";
-import { useState } from "react";
 
 export default function LoginPage() {
   const accountRestoreModalControl = useExternalModalController();
@@ -109,7 +109,7 @@ export default function LoginPage() {
 
             {isError && (
               <div className="mb-2 text-center text-sm font-medium text-red-500">
-                {"로그인에 실패했습니다."}
+                {"이메일 또는 비밀번호가 일치하지 않습니다"}
               </div>
             )}
 

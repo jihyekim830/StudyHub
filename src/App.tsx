@@ -1,4 +1,4 @@
-import { RootLayout } from "@/components/layout";
+import { ExamLayout, RootLayout } from "@/components/layout";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { NotFound } from "@/components/common/not-found";
 import {
@@ -27,7 +27,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
 
-        <Route path="/exam">
+        <Route path="/exam" element={<ExamLayout />}>
           <Route path=":deploymentId" element={<TakeExam />} />
           {/* TODO 페이지 컴포넌트로 변경하기 */}
           <Route

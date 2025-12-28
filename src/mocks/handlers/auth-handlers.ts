@@ -1,5 +1,8 @@
 import { http, HttpResponse, type PathParams } from "msw";
-import { mockLoginResponse } from "@/mocks/data/auth-data";
+import {
+  mockLoginResponse,
+  mockUserInfoResponse,
+} from "@/mocks/data/auth-data";
 import { API_PATHS, MSW_BASE_URL } from "@/constants";
 import type { LoginRequest } from "@/types/api-request-type/auth-request-type";
 import type {
@@ -7,6 +10,10 @@ import type {
   ErrorResponse,
   ExpiredAccountErrorResponse,
 } from "@/types/api-response-type/auth-response-type";
+
+const meHandler = http.get(`${MSW_BASE_URL}${API_PATHS.accounts.me}`, () => {
+  return HttpResponse.json(mockUserInfoResponse, { status: 200 });
+});
 
 const loginHandler = http.post<
   PathParams,
@@ -23,7 +30,6 @@ const loginHandler = http.post<
         expire_at: "2025-11-11",
       },
     };
-
     return HttpResponse.json(response, { status: 403 });
   }
 
@@ -37,4 +43,4 @@ const loginHandler = http.post<
   );
 });
 
-export const authHandlers = [loginHandler];
+export const authHandlers = [loginHandler, meHandler];

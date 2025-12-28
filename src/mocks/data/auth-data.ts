@@ -1,4 +1,7 @@
-import type { LoginResponse } from "@/types/api-response-type/auth-response-type";
+import type {
+  LoginResponse,
+  UserInfoResponse,
+} from "@/types/api-response-type/auth-response-type";
 
 export const mockLoginResponse: LoginResponse = {
   access_token: "mock-access-token-12345",
@@ -11,4 +14,16 @@ export const mockLoginResponse: LoginResponse = {
     profileImage: "selife.png",
     role: "USER",
   },
+};
+
+export const mockUserInfoResponse: UserInfoResponse = {
+  id: 1,
+  email: "test@gmail.com",
+  nickname: "nelfen",
+  name: "안순표",
+  phone_number: "010-1234-5678",
+  birthday: "1995-01-01",
+  gender: "M",
+  profile_img_url: "selife.png",
+  created_at: "2025-12-26T00:00:00Z",
 };
