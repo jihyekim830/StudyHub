@@ -29,7 +29,7 @@ function Exams() {
   const filteredExams =
     exams?.pages.flatMap((page) => {
       if (category === "all") return page.results;
-      return page.results.filter((item) => item.exam_info.status === category);
+      return page.results.filter((item) => item.examInfo.status === category);
     }) ?? [];
 
   const handleCategoryClick = (category: ExamCategory) => setCategory(category);

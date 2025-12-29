@@ -20,7 +20,7 @@ const SingleChoice = memo(function SingleChoice({
     <div className="flex flex-col gap-3">
       {question.options?.map((option) => (
         <label
-          key={`${question.question_id}-${option}`}
+          key={`${question.questionId}-${option}`}
           className="flex items-center gap-3"
         >
           <input
@@ -32,7 +32,7 @@ const SingleChoice = memo(function SingleChoice({
               "focus:outline-none"
             )}
             checked={option === value}
-            onChange={() => onChange(question.question_id, option)}
+            onChange={() => onChange(question.questionId, option)}
           />
           <span>{option}</span>
         </label>

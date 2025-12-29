@@ -4,7 +4,7 @@ export type ExamCategory = "all" | ExamStatus;
 
 export type ExamCategoryOption = { label: string; value: ExamCategory };
 
-export interface Exam {
+export interface ExamDto {
   id: number;
   submission_id: number | null;
   exam: {
@@ -28,7 +28,31 @@ export interface Exam {
   duration_time: number;
 }
 
-export type QuestionType =
+export interface Exam {
+  id: number;
+  submissionId: number | null;
+  exam: {
+    id: number;
+    title: string;
+    thumbnailImgUrl: string;
+    subject: {
+      id: number;
+      title: string;
+      thumbnailImgUrl: string | null;
+    };
+  };
+  questionCount: number;
+  totalScore: number;
+  examInfo: {
+    status: string;
+    score: number | null;
+    correctAnswerCount: number | null;
+  };
+  isDone: boolean;
+  durationTime: number;
+}
+
+export type QuestionTypeDto =
   | "single_choice"
   | "multiple_choice"
   | "ox"
@@ -36,16 +60,36 @@ export type QuestionType =
   | "ordering"
   | "fill_blank";
 
-export interface Question {
+export type QuestionType =
+  | "singleChoice"
+  | "multipleChoice"
+  | "ox"
+  | "shortAnswer"
+  | "ordering"
+  | "fillBlank";
+
+export interface QuestionDto {
   question_id: number;
   number: number;
-  type: QuestionType;
+  type: QuestionTypeDto;
   question: string;
   point: number;
   prompt: string | null;
   blank_count: number | null;
   options: string[] | null;
   answer_input: string | string[] | null;
+}
+
+export interface Question {
+  questionId: number;
+  number: number;
+  type: QuestionType;
+  question: string;
+  point: number;
+  prompt: string | null;
+  blankCount: number | null;
+  options: string[] | null;
+  answerInput: string | string[] | null;
 }
 
 interface ExamQuestionContentProps {
@@ -63,7 +107,7 @@ export type ExamDeploymentStatus = "activated" | "deactivated";
 
 export interface AnswerDto {
   question_id: number;
-  type: string;
+  type: QuestionTypeDto;
   submitted_answer: unknown;
 }
 

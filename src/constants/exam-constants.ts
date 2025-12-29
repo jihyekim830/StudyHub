@@ -46,12 +46,12 @@ export const EXAM_SUBJECT_ICON_MAP: Record<string, string> = {
 };
 
 export const EXAM_QUESTION_TYPE_LABEL_MAP: Record<QuestionType, string> = {
-  fill_blank: "빈칸식",
-  multiple_choice: "다중선택",
+  fillBlank: "빈칸식",
+  multipleChoice: "다중선택",
   ordering: "순서배열",
   ox: "OX선택",
-  short_answer: "단답형",
-  single_choice: "단일선택",
+  shortAnswer: "단답형",
+  singleChoice: "단일선택",
 };
 
 export const CHEATING_COUNT_ICON_RULES = [

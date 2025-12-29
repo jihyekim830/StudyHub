@@ -3,8 +3,8 @@ import { useEffect } from "react";
 
 function useExamCheatingStatus(deploymentId: number) {
   const { mutate: reportExamCheating, data } = useReportExamCheating();
-  const cheatingCount = data?.cheating_count ?? 0;
-  const isForcedSubmitted = data?.is_forced_submitted ?? false;
+  const cheatingCount = data?.cheatingCount ?? 0;
+  const isForcedSubmitted = data?.isForcedSubmitted ?? false;
 
   useEffect(() => {
     if (isForcedSubmitted) return;

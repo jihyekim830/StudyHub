@@ -1,7 +1,7 @@
-import type { Exam, Question } from "@/types";
-import type { ExamCheatingResponse } from "@/types/api-response-type/exam-response-types";
+import type { ExamDto, QuestionDto } from "@/types";
+import type { ExamCheatingResponseDto } from "@/types/api-response-type/exam-response-types";
 
-export const examList: Exam[] = [
+export const examList: ExamDto[] = [
   {
     id: 101,
     submission_id: 333,
@@ -119,7 +119,7 @@ export const examList: Exam[] = [
   },
 ];
 
-export const questionList: Question[] = [
+export const questionList: QuestionDto[] = [
   {
     question_id: 1,
     number: 1,
@@ -221,7 +221,7 @@ export const questionList: Question[] = [
   },
 ];
 
-export const cheatingState: ExamCheatingResponse = {
+export const cheatingState: ExamCheatingResponseDto = {
   cheating_count: 0,
   is_forced_submitted: false,
 };

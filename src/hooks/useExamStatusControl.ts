@@ -5,7 +5,7 @@ import { useToast } from "@/hooks";
 
 function useExamStatusControl(deploymentId: number) {
   const { data: examStatusDto } = useExamStatusPolling(deploymentId);
-  const examStatus = examStatusDto?.exam_status;
+  const examStatus = examStatusDto?.examStatus;
   const navigate = useNavigate();
   const { triggerToast } = useToast();
 

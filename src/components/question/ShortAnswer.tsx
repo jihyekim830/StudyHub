@@ -17,7 +17,7 @@ const ShortAnswer = memo(function ShortAnswer({
   onChange,
 }: ShortAnswerProps) {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    onChange(question.question_id, event.target.value);
+    onChange(question.questionId, event.target.value);
 
   return (
     <input

@@ -2,17 +2,17 @@ import { API_PATHS, MSW_BASE_URL } from "@/constants";
 import { http, HttpResponse } from "msw";
 import { cheatingState, examList, questionList } from "@/mocks/data/exam-data";
 import type {
-  ExamCheatingResponse,
-  ExamListResponse,
-  ExamQuestionListResponse,
-  ExamStatusResponse,
-  ExamSubmitResponse,
+  ExamCheatingResponseDto,
+  ExamListResponseDto,
+  ExamQuestionListResponseDto,
+  ExamStatusResponseDto,
+  ExamSubmitResponseDto,
 } from "@/types/api-response-type/exam-response-types";
 import type { ExamCheatingRequest } from "@/types/api-request-type/exam-request-types";
 
 const PAGE_SIZE = 5;
 const LAST_PAGE = 10;
-const getExamListResponse = (page: number): ExamListResponse => {
+const getExamListResponse = (page: number): ExamListResponseDto => {
   const results = Array.from({ length: PAGE_SIZE }, (_, index) => {
     const exam = examList[index % examList.length];
     const id = page === 1 ? index : index + PAGE_SIZE * page;
@@ -65,7 +65,7 @@ const getExamQuestionList = http.get(
     const { deploymentId } = params;
 
     if (deploymentId === "1")
-      return HttpResponse.json<ExamQuestionListResponse>({
+      return HttpResponse.json<ExamQuestionListResponseDto>({
         exam_id: 1,
         exam_name: "TypeScript 기본 문법 테스트",
         duration_time: 30,
@@ -95,14 +95,14 @@ const reportExamCheating = http.post(
     if (cheatingState.cheating_count > 2)
       cheatingState.is_forced_submitted = true;
 
-    return HttpResponse.json<ExamCheatingResponse>(cheatingState);
+    return HttpResponse.json<ExamCheatingResponseDto>(cheatingState);
   }
 );
 
 const checkExamStatus = http.get(
   `${MSW_BASE_URL}${API_PATHS.exams.deployments.base}/:deploymentId/status`,
   () => {
-    return HttpResponse.json<ExamStatusResponse>({
+    return HttpResponse.json<ExamStatusResponseDto>({
       exam_status: "activated",
       force_submit: false,
     });
@@ -118,7 +118,7 @@ const checkExamStatus = http.get(
 const submitExam = http.post(
   `${MSW_BASE_URL}${API_PATHS.exams.submissions.base}`,
   () => {
-    return HttpResponse.json<ExamSubmitResponse>({
+    return HttpResponse.json<ExamSubmitResponseDto>({
       submission_id: 350,
       score: 85,
       correct_answer_count: 17,
@@ -130,6 +130,7 @@ const submitExam = http.post(
     //   { error_detail: "자격 인증 데이터가 제공되지 않았습니다." },
     //   { status: 401 }
     // );
+    // return HttpResponse.json(null, { status: 500 });
   }
 );
 

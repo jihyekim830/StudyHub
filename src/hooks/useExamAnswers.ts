@@ -24,7 +24,7 @@ function useExamAnswers(questions: Question[] | null) {
 
     const initialState = Object.fromEntries(
       questions.map((question) => [
-        question.question_id,
+        question.questionId,
         { type: question.type, submittedAnswer: null },
       ])
     );

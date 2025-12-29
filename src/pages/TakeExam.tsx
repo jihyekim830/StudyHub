@@ -83,9 +83,7 @@ function TakeExam() {
           <div className="flex grow items-start gap-3">
             <ArrowLeftIcon className="mt-1 size-6" />
             <div className="flex flex-col gap-1">
-              <span className="text-xl font-semibold">
-                {examDto?.exam_name}
-              </span>
+              <span className="text-xl font-semibold">{examDto?.examName}</span>
               <span className="text-neutral-700">
                 집중해서 천천히, 끝까지 응시해 주세요. 응원할게요💪
               </span>
@@ -106,9 +104,9 @@ function TakeExam() {
       <ul className="mx-auto mt-8 flex max-w-7xl flex-col gap-10">
         {examDto?.questions?.map((question) => (
           <ExamQuestion
-            key={question.question_id}
+            key={question.questionId}
             question={question}
-            value={answers[question.question_id]?.submittedAnswer}
+            value={answers[question.questionId]?.submittedAnswer}
             onChange={handleAnswerChange}
           />
         ))}

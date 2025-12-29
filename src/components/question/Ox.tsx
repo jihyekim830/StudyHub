@@ -26,13 +26,13 @@ const Ox = memo(function Ox({ question, value, onChange }: OxProps) {
     <div className="flex flex-col gap-2.5">
       {OPTIONS.map((option) => (
         <button
-          key={`${question.question_id}-ox-${option.value}`}
+          key={`${question.questionId}-ox-${option.value}`}
           className={cn(
             "flex h-12 w-4/12 items-center gap-2 rounded-sm bg-neutral-200 px-4",
             "focus:outline-none",
             { "bg-primary-100": option.value === value }
           )}
-          onClick={() => onChange(question.question_id, option.value)}
+          onClick={() => onChange(question.questionId, option.value)}
         >
           {option.value === "O" ? (
             <CircleIcon

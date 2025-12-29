@@ -24,14 +24,14 @@ const MultipleChoice = memo(function MultipleChoice({
       ? selectedOptions.filter((item) => item !== option)
       : [...selectedOptions, option];
 
-    onChange(question.question_id, nextOptions);
+    onChange(question.questionId, nextOptions);
   };
 
   return (
     <div className="flex flex-col gap-3">
       {question.options?.map((option) => (
         <label
-          key={`${question.question_id}-${option}`}
+          key={`${question.questionId}-${option}`}
           className="relative flex items-center gap-3"
         >
           <input

@@ -2,11 +2,11 @@ import { API_PATHS, MSW_BASE_URL } from "@/constants";
 import { api } from "@/lib";
 import type { ExamSubmitRequest } from "@/types/api-request-type/exam-request-types";
 import type {
-  ExamCheatingResponse,
-  ExamListResponse,
-  ExamQuestionListResponse,
-  ExamStatusResponse,
-  ExamSubmitResponse,
+  ExamCheatingResponseDto,
+  ExamListResponseDto,
+  ExamQuestionListResponseDto,
+  ExamStatusResponseDto,
+  ExamSubmitResponseDto,
 } from "@/types/api-response-type/exam-response-types";
 
 export const checkExamCode = (
@@ -20,7 +20,7 @@ export const checkExamCode = (
 
 export const getExamList = async (
   page: number = 1
-): Promise<ExamListResponse> => {
+): Promise<ExamListResponseDto> => {
   const response = await api.get(
     `${MSW_BASE_URL}${API_PATHS.exams.deployments.list(page)}`
   );
@@ -30,7 +30,7 @@ export const getExamList = async (
 
 export const getExamQuestionList = async (
   deploymentId: number
-): Promise<ExamQuestionListResponse> => {
+): Promise<ExamQuestionListResponseDto> => {
   const response = await api.get(
     `${MSW_BASE_URL}${API_PATHS.exams.deployments.questionList(deploymentId)}`
   );
@@ -41,7 +41,7 @@ export const getExamQuestionList = async (
 export const reportExamCheating = async (
   deploymentId: number,
   event: string
-): Promise<ExamCheatingResponse> => {
+): Promise<ExamCheatingResponseDto> => {
   const response = await api.post(
     `${MSW_BASE_URL}${API_PATHS.exams.deployments.cheating(deploymentId)}`,
     { event }
@@ -52,7 +52,7 @@ export const reportExamCheating = async (
 
 export const checkExamStatus = async (
   deploymentId: number
-): Promise<ExamStatusResponse> => {
+): Promise<ExamStatusResponseDto> => {
   const response = await api.get(
     `${MSW_BASE_URL}${API_PATHS.exams.deployments.status(deploymentId)}`
   );
@@ -64,7 +64,7 @@ export const submitExam = async ({
   started_at,
   cheating_count,
   answers,
-}: ExamSubmitRequest): Promise<ExamSubmitResponse> => {
+}: ExamSubmitRequest): Promise<ExamSubmitResponseDto> => {
   const response = await api.post(
     `${MSW_BASE_URL}${API_PATHS.exams.submissions.base}`,
     { started_at, cheating_count, answers }

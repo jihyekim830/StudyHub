@@ -10,10 +10,10 @@ export const EXAM_QUESTION_CONTENT_MAP: Record<
   QuestionType,
   ExamQuestionContentComponent
 > = {
-  single_choice: SingleChoice,
-  multiple_choice: MultipleChoice,
-  short_answer: ShortAnswer,
-  fill_blank: FillBlank,
+  singleChoice: SingleChoice,
+  multipleChoice: MultipleChoice,
+  shortAnswer: ShortAnswer,
+  fillBlank: FillBlank,
   ox: Ox,
   ordering: Ordering,
 };
