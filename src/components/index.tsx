@@ -12,6 +12,7 @@ import ExamQuestion from "@/components/question/ExamQuestion";
 import CheatingCountIcons from "@/components/CheatingCountIcons";
 import ExamCheatingModal from "@/components/ExamCheatingModal";
 import ExamFocusWarning from "@/components/ExamFocusWarning";
+import NicknameField from "@/components/NicknameField";
 
 export {
   Footer,
@@ -28,4 +29,5 @@ export {
   CheatingCountIcons,
   ExamCheatingModal,
   ExamFocusWarning,
+  NicknameField,
 };

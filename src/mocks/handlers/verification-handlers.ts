@@ -55,7 +55,10 @@ const postVerifyEmail = http.post(
       );
     }
     return HttpResponse.json(
-      { detail: "이메일 인증에 성공했습니다." },
+      {
+        detail: "이메일 인증에 성공했습니다.",
+        email_token: "mock_email_token_qwer1234",
+      },
       { status: 200 }
     );
   }
@@ -117,7 +120,10 @@ const postVerifySMS = http.post(
       );
     }
     return HttpResponse.json(
-      { detail: "휴대폰 인증에 성공했습니다." },
+      {
+        detail: "휴대폰 인증에 성공했습니다.",
+        sms_token: "mock_sms_token_11112222",
+      },
       { status: 200 }
     );
   }

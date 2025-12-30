@@ -4,5 +4,14 @@ import LoginPage from "@/pages/LoginPage";
 import SignupPage from "@/pages/SignupPage";
 import EmailSignupPage from "@/pages/EmailSignupPage";
 import TakeExam from "@/pages/TakeExam";
+import ChangePasswordPage from "@/pages/ChangePasswordPage";
 
-export { Home, LoginPage, SignupPage, EmailSignupPage, Exams, TakeExam };
+export {
+  Home,
+  LoginPage,
+  SignupPage,
+  EmailSignupPage,
+  Exams,
+  TakeExam,
+  ChangePasswordPage,
+};

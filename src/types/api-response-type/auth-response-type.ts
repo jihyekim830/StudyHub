@@ -32,6 +32,34 @@ export interface LoginResponse {
   };
 }
 
+export interface SignupResponse {
+  detail: string;
+}
+
+export interface SignupErrorResponse {
+  error_detail: string | { [key: string]: string[] };
+}
+
+export interface EmailVerifyServerResponse {
+  detail: string;
+  email_token: string;
+}
+
+export interface SMSVerifyServerResponse {
+  detail: string;
+  sms_token: string;
+}
+
+export interface EmailVerifyResponse {
+  detail: string;
+  emailToken: string;
+}
+
+export interface SMSVerifyResponse {
+  detail: string;
+  smsToken: string;
+}
+
 export interface ErrorResponse {
   message: string;
 }

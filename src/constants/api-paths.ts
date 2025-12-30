@@ -26,6 +26,8 @@ export const API_PATHS = {
   },
   accounts: {
     login: `${API_PREFIX}/accounts/login`,
+    checkNickname: `${API_PREFIX}/accounts/check-nickname`,
+    signup: `${API_PREFIX}/accounts/signup`,
     availableCourses: `${API_PREFIX}/accounts/available-courses`,
     enrollStudent: `${API_PREFIX}/accounts/enroll-student`,
     verification: {
@@ -35,5 +37,6 @@ export const API_PATHS = {
       verfiySMS: `${API_PREFIX}${VERIFICATION_API_PREFIX}/verify-sms`,
     },
     me: `${API_PREFIX}/accounts/me`,
+    changePassword: `${API_PREFIX}/accounts/change-password`,
   },
 } as const;

@@ -42,7 +42,8 @@ function TakeExam() {
   const { answers, hasUnansweredQuestions, handleAnswerChange } =
     useExamAnswers(examDto?.questions ?? null);
 
-  const { startedAt, remainingMs, hasTimedOut } = useExamTimer(durationTime);
+  const { startedAt, remainingMs, hasTimedOut, stopTimer } =
+    useExamTimer(durationTime);
   const { cheatingCount, isForcedSubmitted } =
     useExamCheatingStatus(deploymentId);
   const { modalControl } = useExamCheatingModal(cheatingCount);
@@ -54,11 +55,14 @@ function TakeExam() {
     cheatingCount,
     answers,
     shouldForceSubmit,
-    deploymentId
+    deploymentId,
+    modalControl.isOpen,
+    stopTimer
   );
 
   const handleExamSubmit = () => {
     if (!hasUnansweredQuestions) {
+      stopTimer();
       submit();
       return;
     }

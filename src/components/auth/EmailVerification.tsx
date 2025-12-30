@@ -1,22 +1,37 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Input, Button } from "@/components/common";
 import type { EmailVerificationSchemaType } from "@/schemas/authSchemas";
 import { useSendEmail, useVerifyEmail } from "@/hooks/api";
 import { useToast } from "@/hooks";
 
-export default function EmailVerification() {
+interface EmailVerificationProps {
+  onVerify: (status: boolean) => void;
+}
+
+export default function EmailVerification({
+  onVerify,
+}: EmailVerificationProps) {
   const {
     register,
     watch,
+    setValue,
+    setFocus,
     formState: { errors },
   } = useFormContext<EmailVerificationSchemaType>();
 
   const [isEmailSent, setIsEmailSent] = useState(false);
+  const [isVerified, setIsVerified] = useState(false);
   const { triggerToast } = useToast();
 
   const emailValue = watch("email");
   const verificationCode = watch("emailcode");
+
+  useEffect(() => {
+    setIsVerified(false);
+    setIsEmailSent(false);
+    onVerify(false);
+  }, [emailValue, onVerify]);
 
   const { mutate: sendEmail, isPending: isSending } = useSendEmail({
     onSuccess: () => {
@@ -29,7 +44,7 @@ export default function EmailVerification() {
     },
     onError: () => {
       triggerToast({
-        text: "인증코드 전송에 실패했습니다. 다시 시도해주세요.",
+        text: "인증코드 전송에 실패했습니다.",
         status: "danger",
         variant: "small",
       });
@@ -37,7 +52,10 @@ export default function EmailVerification() {
   });
 
   const { mutate: verifyEmail, isPending: isVerifying } = useVerifyEmail({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setIsVerified(true);
+      onVerify(true);
+      setValue("emailToken", data.emailToken, { shouldValidate: true });
       triggerToast({
         text: "이메일 인증이 완료되었습니다.",
         status: "success",
@@ -50,12 +68,17 @@ export default function EmailVerification() {
         status: "danger",
         variant: "small",
       });
+      setValue("emailcode", "");
+      setIsVerified(false);
+      onVerify(false);
     },
   });
 
   const handleSendCode = () => {
     if (emailValue && !errors.email) {
       sendEmail({ email: emailValue });
+      setValue("emailcode", "");
+      setFocus("emailcode");
     }
   };
 
@@ -83,15 +106,20 @@ export default function EmailVerification() {
           {...register("email")}
           errorMessage={errors.email?.message}
           placeholder="ozcoding@naver.com"
+          readOnly={isVerified}
         />
         <Button
           type="button"
           variant="outline"
           className="h-12 w-28 p-0"
-          disabled={!!errors.email || !emailValue || isSending}
+          disabled={!!errors.email || !emailValue || isSending || isVerified}
           onClick={handleSendCode}
         >
-          {isSending ? "전송 중..." : "인증코드전송"}
+          {isSending
+            ? "전송 중..."
+            : isEmailSent
+              ? "다시전송하기"
+              : "인증코드전송"}
         </Button>
       </div>
 
@@ -100,20 +128,31 @@ export default function EmailVerification() {
           className="flex-1"
           placeholder="인증코드 6자리를 입력해주세요"
           {...register("emailcode")}
-          errorMessage={errors.emailcode?.message}
           maxLength={6}
+          variant={
+            isVerified ? "success" : errors.emailcode ? "danger" : "default"
+          }
+          errorMessage={errors.emailcode?.message}
           disabled={!isEmailSent || isVerifying}
+          readOnly={isVerified}
         />
         <Button
           type="button"
           variant="outline"
           className="h-12 w-28 p-0"
           disabled={
-            !isEmailSent || verificationCode?.length !== 6 || isVerifying
+            !isEmailSent ||
+            verificationCode?.length !== 6 ||
+            isVerifying ||
+            isVerified
           }
           onClick={handleVerifyCode}
         >
-          {isVerifying ? "확인 중..." : "인증코드확인"}
+          {isVerifying
+            ? "확인 중..."
+            : isVerified
+              ? "인증완료"
+              : "인증코드확인"}
         </Button>
       </div>
     </section>

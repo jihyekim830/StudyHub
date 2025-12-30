@@ -3,9 +3,11 @@ import UserMenu from "@/components/header/UserMenu";
 import { HeaderLogo } from "@/assets/images/logo-images";
 import { useAuthStore } from "@/store/useAuthStore";
 import { HeaderLink } from "@/components/header/HeaderLink";
+import { useLogout } from "@/hooks/useLogout";
 
 export default function Header() {
-  const { isLoggedIn, deleteAccessToken } = useAuthStore();
+  const { isLoggedIn } = useAuthStore();
+  const { mutate: logout } = useLogout();
 
   return (
     <header className="sticky top-0 z-20 border-b border-gray-200 bg-white">
@@ -32,7 +34,7 @@ export default function Header() {
 
           <div className="hidden items-center space-x-4 md:flex">
             {isLoggedIn ? (
-              <UserMenu onLogout={deleteAccessToken} />
+              <UserMenu onLogout={() => logout()} />
             ) : (
               <div className="flex items-center">
                 <HeaderLink to="/login">로그인</HeaderLink>

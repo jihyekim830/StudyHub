@@ -1,21 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Input, Button } from "@/components/common";
 import type { SMSVerificationSchemaType } from "@/schemas/authSchemas";
 import { useSendSMS, useVerifySMS } from "@/hooks/api";
 import { useToast } from "@/hooks";
 
-export default function SMSVerification() {
-  const { register, watch, setFocus } =
-    useFormContext<SMSVerificationSchemaType>();
+interface SMSVerificationProps {
+  onVerify: (status: boolean) => void;
+}
+
+export default function SMSVerification({ onVerify }: SMSVerificationProps) {
+  const {
+    register,
+    watch,
+    setFocus,
+    setValue,
+    formState: { errors },
+  } = useFormContext<SMSVerificationSchemaType>();
 
   const [isSMSSent, setIsSMSSent] = useState(false);
+
+  const [isVerified, setIsVerified] = useState(false);
 
   const { triggerToast } = useToast();
 
   const phoneValues = watch(["phone1", "phone2", "phone3"]);
   const verificationCode = watch("smscode");
   const fullPhoneNumber = phoneValues.join("");
+
+  useEffect(() => {
+    setIsVerified(false);
+    setIsSMSSent(false);
+    onVerify(false);
+    setValue("smscode", "");
+  }, [fullPhoneNumber, onVerify, setValue]);
 
   const handlePhoneAutoAfter = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -30,6 +48,8 @@ export default function SMSVerification() {
   const { mutate: sendSMS, isPending: isSending } = useSendSMS({
     onSuccess: () => {
       setIsSMSSent(true);
+      setValue("smscode", "");
+      setFocus("smscode");
       triggerToast({
         text: "인증번호가 전송되었습니다.",
         status: "success",
@@ -38,7 +58,7 @@ export default function SMSVerification() {
     },
     onError: () => {
       triggerToast({
-        text: "인증번호 전송에 실패했습니다. 다시 시도해주세요.",
+        text: "인증번호 전송에 실패했습니다.",
         status: "danger",
         variant: "small",
       });
@@ -46,7 +66,10 @@ export default function SMSVerification() {
   });
 
   const { mutate: verifySMS, isPending: isVerifying } = useVerifySMS({
-    onSuccess: () => {
+    onSuccess: (data) => {
+      setIsVerified(true);
+      onVerify(true);
+      setValue("smsToken", data.smsToken, { shouldValidate: true });
       triggerToast({
         text: "인증번호 확인이 완료되었습니다.",
         status: "success",
@@ -54,6 +77,9 @@ export default function SMSVerification() {
       });
     },
     onError: () => {
+      setValue("smscode", "");
+      setIsVerified(false);
+      onVerify(false);
       triggerToast({
         text: "인증번호가 일치하지 않습니다.",
         status: "danger",
@@ -69,7 +95,7 @@ export default function SMSVerification() {
   };
 
   const handleVerifyCode = () => {
-    if (verificationCode.length === 6) {
+    if (verificationCode && verificationCode.length === 6) {
       verifySMS({ phoneNumber: fullPhoneNumber, code: verificationCode });
     }
   };
@@ -90,6 +116,7 @@ export default function SMSVerification() {
             handlePhoneAutoAfter(e, "phone2", 3);
           }}
           placeholder="010"
+          readOnly={isVerified}
         />
         <span>-</span>
         <Input
@@ -100,36 +127,59 @@ export default function SMSVerification() {
             register("phone2").onChange(e);
             handlePhoneAutoAfter(e, "phone3", 4);
           }}
+          readOnly={isVerified}
         />
         <span>-</span>
-        <Input className="flex-1" maxLength={4} {...register("phone3")} />
+        <Input
+          className="flex-1"
+          maxLength={4}
+          {...register("phone3")}
+          readOnly={isVerified}
+        />
 
         <Button
           type="button"
           variant="outline"
           className="h-12 w-28 p-0"
-          disabled={phoneValues.some((v) => !v) || isSending}
+          disabled={phoneValues.some((v) => !v) || isSending || isVerified}
           onClick={handleSendCode}
         >
-          {isSending ? "전송 중..." : "인증번호전송"}
+          {isSending
+            ? "전송 중..."
+            : isSMSSent
+              ? "다시전송하기"
+              : "인증코드전송"}
         </Button>
       </div>
-
       <div className="flex items-center gap-2">
         <Input
           className="flex-1"
+          variant={
+            isVerified ? "success" : errors.smscode ? "danger" : "default"
+          }
           placeholder="인증번호 6자리를 입력해주세요"
           maxLength={6}
           {...register("smscode")}
+          disabled={!isSMSSent || isVerifying}
+          readOnly={isVerified}
         />
         <Button
           type="button"
           variant="outline"
           className="h-12 w-28 p-0"
-          disabled={!isSMSSent || verificationCode.length !== 6 || isVerifying}
+          disabled={
+            !isSMSSent ||
+            (verificationCode?.length ?? 0) !== 6 ||
+            isVerifying ||
+            isVerified
+          }
           onClick={handleVerifyCode}
         >
-          {isVerifying ? "확인 중..." : "인증번호확인"}
+          {isVerifying
+            ? "확인 중..."
+            : isVerified
+              ? "인증완료"
+              : "인증번호확인"}
         </Button>
       </div>
     </section>

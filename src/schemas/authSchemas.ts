@@ -20,6 +20,7 @@ export const LoginSchema = z.object({
 export const EmailVerificationSchema = z.object({
   email: emailPart,
   emailcode: verificationCodePart,
+  emailToken: z.string().optional(),
 });
 
 export const SMSVerificationSchema = z.object({
@@ -27,30 +28,54 @@ export const SMSVerificationSchema = z.object({
   smscode: verificationCodePart.regex(/^\d+$/, {
     message: "숫자만 입력 가능합니다.",
   }),
+  smsToken: z.string().optional(),
 });
+
+export const PasswordSchema = z
+  .string()
+  .min(8, { message: "비밀번호는 8자 이상이어야 합니다." })
+  .regex(/[a-zA-Z]/, { message: "영문이 포함되어야 합니다." })
+  .regex(/[0-9]/, { message: "숫자가 포함되어야 합니다." })
+  .regex(/[^a-zA-Z0-9]/, { message: "특수문자가 포함되어야 합니다." });
+
+export const PasswordConfirmSchema = z
+  .string()
+  .min(1, { message: "비밀번호 확인을 입력해주세요." });
+
+export const ChangePasswordSchema = z
+  .object({
+    oldPassword: z
+      .string()
+      .min(1, { message: "기존 비밀번호를 입력해주세요." }),
+    newPassword: PasswordSchema,
+    passwordConfirm: PasswordConfirmSchema,
+  })
+  .refine((data) => data.newPassword === data.passwordConfirm, {
+    message: "비밀번호가 일치하지 않습니다.",
+    path: ["passwordConfirm"],
+  });
 
 export const SignupSchema = z
   .object({
-    email: emailPart,
-    password: z
-      .string()
-      .min(8, { message: "비밀번호는 8자 이상이어야 합니다." })
-      .regex(/[a-zA-Z]/, { message: "영문이 포함되어야 합니다." })
-      .regex(/[0-9]/, { message: "숫자가 포함되어야 합니다." })
-      .regex(/[^a-zA-Z0-9]/, { message: "특수문자가 포함되어야 합니다." }),
-    passwordConfirm: z
-      .string()
-      .min(1, { message: "비밀번호 확인을 입력해주세요." }),
     name: z.string().min(1, { message: "이름을 입력해주세요." }),
+    email: emailPart,
+    password: PasswordSchema,
+    passwordConfirm: PasswordConfirmSchema,
     nickname: z
       .string()
-      .min(1, { message: "닉네임을 입력해주세요." })
-      .max(10, { message: "닉네임은 10자 이내여야 합니다." }),
+      .min(2, { message: "닉네임은 2자 이상 입력해주세요." })
+      .max(10, { message: "닉네임은 10자 이내여야 합니다." })
+      .regex(
+        /[a-zA-Z0-9가-힣]+$/,
+        "특수문자를 제외한 한글, 영문, 숫자만 사용 가능합니다."
+      ),
     birthday: z.string().regex(/^\d{8}$/, {
       message: "생년월일은 8자리 숫자로 입력해주세요 (ex. 20001110)",
     }),
     gender: z.enum(["M", "F"]),
     ...phoneParts,
+    emailToken: z.string().min(1, "이메일 인증이 필요합니다."),
+    smsToken: z.string().min(1, "휴대폰 인증이 필요합니다."),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: "비밀번호가 일치하지 않습니다.",
@@ -63,3 +88,4 @@ export type EmailVerificationSchemaType = z.infer<
   typeof EmailVerificationSchema
 >;
 export type SMSVerificationSchemaType = z.infer<typeof SMSVerificationSchema>;
+export type ChangePasswordSchema = z.infer<typeof ChangePasswordSchema>;

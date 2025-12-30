@@ -41,7 +41,7 @@ export default function UserMenu({ onLogout }: UserMenuProps) {
             마이페이지
           </SideBarTapButton>
           <SideBarTapButton as="button" onClick={onLogout}>
-            로그아웃(임시)
+            로그아웃
           </SideBarTapButton>
         </div>
       )}

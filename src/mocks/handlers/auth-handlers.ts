@@ -11,9 +11,39 @@ import type {
   ExpiredAccountErrorResponse,
 } from "@/types/api-response-type/auth-response-type";
 
+const checkNicknameHandler = http.get(
+  `${MSW_BASE_URL}${API_PATHS.accounts.checkNickname}`,
+  ({ request }) => {
+    const url = new URL(request.url);
+    const nickname = url.searchParams.get("nickname");
+
+    if (nickname === "test") {
+      return HttpResponse.json(
+        { available: false, error_detail: "중복된 닉네임이 존재합니다." },
+        { status: 409 }
+      );
+    }
+
+    return HttpResponse.json(
+      { available: true, detail: "사용가능한 닉네임 입니다." },
+      { status: 200 }
+    );
+  }
+);
+
 const meHandler = http.get(`${MSW_BASE_URL}${API_PATHS.accounts.me}`, () => {
   return HttpResponse.json(mockUserInfoResponse, { status: 200 });
 });
+
+const signupHandler = http.post(
+  `${MSW_BASE_URL}${API_PATHS.accounts.signup}`,
+  async () => {
+    return HttpResponse.json(
+      { detail: "회원가입이 완료되었습니다." },
+      { status: 201 }
+    );
+  }
+);
 
 const loginHandler = http.post<
   PathParams,
@@ -43,4 +73,28 @@ const loginHandler = http.post<
   );
 });
 
-export const authHandlers = [loginHandler, meHandler];
+const changePasswordHandler = http.post(
+  `${MSW_BASE_URL}${API_PATHS.accounts.changePassword}`,
+  async ({ request }) => {
+    const body = (await request.clone().json()) as {
+      old_password: string;
+      new_password: string;
+    };
+
+    const { old_password, new_password } = body;
+
+    if (!(old_password && new_password)) {
+      return HttpResponse.json({}, { status: 400 });
+    }
+
+    return HttpResponse.json({}, { status: 200 });
+  }
+);
+
+export const authHandlers = [
+  loginHandler,
+  meHandler,
+  checkNicknameHandler,
+  signupHandler,
+  changePasswordHandler,
+];

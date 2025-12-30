@@ -2,20 +2,26 @@ import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HeaderLogo } from "@/assets/images/logo-images";
 import { Button, Input, Password } from "@/components/common";
+import { NicknameField } from "@/components";
 import { SignupSchema, type SignupSchemaType } from "@/schemas/authSchemas";
 import { cn } from "@/lib";
 import EmailVerification from "@/components/auth/EmailVerification";
 import SMSVerification from "@/components/auth/SMSVerification";
+import { useState } from "react";
+import { useSignup } from "@/hooks/useSignup";
+import type { SignupRequest } from "@/types/api-request-type/auth-request-type";
 
 export default function EmailSignupPage() {
+  const [isNicknameVerified, setIsNicknameVerified] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [isSmsVerified, setIsSmsVerified] = useState(false);
+  const { mutate: signup, isPending } = useSignup();
+
   const methods = useForm<SignupSchemaType>({
     resolver: zodResolver(SignupSchema),
     mode: "onChange",
     defaultValues: {
       gender: "M",
-      phone1: "",
-      phone2: "",
-      phone3: "",
     },
   });
 
@@ -28,12 +34,28 @@ export default function EmailSignupPage() {
   } = methods;
 
   const values = watch();
+  const isSubmitDisabled =
+    !isValid || !isNicknameVerified || !isEmailVerified || !isSmsVerified;
 
   const onSubmit = (data: SignupSchemaType) => {
-    {
-      /* 회원가입 로직 구현 */
-    }
-    console.log("회원가입 데이터 제출:", data);
+    const formattedBirthday = data.birthday.replace(
+      /(\d{4})(\d{2})(\d{2})/,
+      "$1-$2-$3"
+    );
+
+    const signupData: SignupRequest = {
+      password: data.password,
+      nickname: data.nickname,
+      name: data.name,
+      birthday: formattedBirthday,
+      gender: data.gender,
+      email_token: data.emailToken,
+      sms_token: data.smsToken,
+    };
+
+    console.log("서버로 전송할 최종 데이터:", signupData);
+
+    signup(signupData);
   };
 
   return (
@@ -63,28 +85,7 @@ export default function EmailSignupPage() {
             />
           </section>
 
-          {/* Todo: 닉네임 유효성 검사 추가 예정 & 컴포넌트 분리를 통해 마이페이지에서도 사용가능하게 수정 */}
-          <section>
-            <label className="mt-8 mb-1 block text-sm">
-              닉네임<span className="text-red-500">*</span>
-            </label>
-            <div className="flex items-start gap-2">
-              <Input
-                className="flex-1"
-                {...register("nickname")}
-                errorMessage={errors.nickname?.message}
-                placeholder="닉네임을 입력해주세요"
-              />
-              <Button
-                type="button"
-                variant="outline"
-                className="h-12 w-28 p-0"
-                disabled={!values.nickname}
-              >
-                중복확인
-              </Button>
-            </div>
-          </section>
+          <NicknameField onVerifyStatusChange={setIsNicknameVerified} />
 
           <section>
             <label className="mt-8 mb-1 block text-sm">
@@ -93,6 +94,7 @@ export default function EmailSignupPage() {
             <Input
               {...register("birthday")}
               errorMessage={errors.birthday?.message}
+              maxLength={8}
               placeholder="8자리 숫자로 입력해주세요 (ex. 20001110)"
             />
           </section>
@@ -129,11 +131,10 @@ export default function EmailSignupPage() {
             </div>
           </section>
 
-          {/* Todo: useSendEmail, useVerifyEmail을 통해 인증 기능 추가 & 인증 완료시 toast 출력 */}
-          <EmailVerification />
+          <EmailVerification onVerify={setIsEmailVerified} />
 
-          {/* Todo: useSendPhone, useVerifyPhone 파일 추가 예정 & 인증 완료시 toast 출력 */}
-          <SMSVerification />
+          <SMSVerification onVerify={setIsSmsVerified} />
+
           <section>
             <div className="flex flex-col gap-2">
               <label className="block text-sm">
@@ -155,8 +156,12 @@ export default function EmailSignupPage() {
             </div>
           </section>
 
-          <Button type="submit" className="mt-2 w-full" disabled={!isValid}>
-            가입하기
+          <Button
+            type="submit"
+            className="mt-2 w-full"
+            disabled={isSubmitDisabled || isPending}
+          >
+            {isPending ? "가입 중..." : "가입하기"}
           </Button>
         </form>
       </div>

@@ -8,6 +8,7 @@ import {
   Exams,
   Home,
   TakeExam,
+  ChangePasswordPage,
 } from "@/pages";
 
 function App() {
@@ -24,6 +25,10 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/email-signup" element={<EmailSignupPage />} />
+
+          {/* TODO: 마이페이지 레이아웃 안으로 넣기 */}
+          <Route path="/change-password" element={<ChangePasswordPage />} />
+
           <Route path="*" element={<NotFound />} />
         </Route>
 
