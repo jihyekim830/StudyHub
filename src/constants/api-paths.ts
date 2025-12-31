@@ -39,6 +39,7 @@ export const API_PATHS = {
       verfiySMS: `${API_PREFIX}${VERIFICATION_API_PREFIX}/verify-sms`,
     },
     me: `${API_PREFIX}/accounts/me`,
+    refresh: `${API_PREFIX}/accounts/refresh`,
     changePassword: `${API_PREFIX}/accounts/change-password`,
   },
 } as const;

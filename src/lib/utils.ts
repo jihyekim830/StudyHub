@@ -49,3 +49,12 @@ export function createCohortsDropdownOptions(
 
   return newCohorts;
 }
+
+export function creatProfileImageUrl(
+  userId: number,
+  size: 64 | 128 | 256 = 128
+) {
+  const s3Domain = import.meta.env.VITE_S3_DOMAIN_URL;
+
+  return `${s3Domain}/uploads/images/user_profile/${userId}/profile${size}.png`;
+}

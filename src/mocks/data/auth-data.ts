@@ -24,6 +24,5 @@ export const mockUserInfoResponse: UserInfoResponse = {
   phone_number: "010-1234-5678",
   birthday: "1995-01-01",
   gender: "M",
-  profile_img_url: "selife.png",
   created_at: "2025-12-26T00:00:00Z",
 };

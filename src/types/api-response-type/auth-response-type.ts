@@ -9,13 +9,11 @@ export interface BaseUserInfo {
 
 export interface UserInfoResponse extends BaseUserInfo {
   phone_number: string;
-  profile_img_url: string;
   created_at: string;
 }
 
 export interface UserInfo extends BaseUserInfo {
   phoneNumber: string;
-  profileImgUrl: string;
   createdAt: string;
 }
 
