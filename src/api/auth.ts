@@ -1,5 +1,5 @@
 import { api } from "@/lib";
-import { API_PATHS, MSW_BASE_URL } from "@/constants";
+import { API_PATHS, API_BASE_URL } from "@/constants/api-paths";
 import type { LoginRequest } from "@/types/api-request-type/auth-request-type";
 import type {
   LoginResponse,
@@ -10,23 +10,21 @@ import type { SignupResponse } from "@/types/api-response-type/auth-response-typ
 
 export const loginUser = async (data: LoginRequest): Promise<LoginResponse> => {
   const response = await api.post(
-    `${MSW_BASE_URL}${API_PATHS.accounts.login}`,
+    `${API_BASE_URL}${API_PATHS.accounts.login}`,
     data
   );
   return response.data;
 };
 
 export const getUserMe = async (): Promise<UserInfoResponse> => {
-  const response = await api.get(`${MSW_BASE_URL}${API_PATHS.accounts.me}`);
+  const response = await api.get(`${API_BASE_URL}${API_PATHS.accounts.me}`);
   return response.data;
 };
 
 export const checkNickname = async (nickname: string) => {
-  const response = await api.get(
-    `${MSW_BASE_URL}${API_PATHS.accounts.checkNickname}`,
-    {
-      params: { nickname },
-    }
+  const response = await api.post(
+    `${API_BASE_URL}${API_PATHS.accounts.checkNickname}`,
+    { nickname }
   );
   return response.data;
 };
@@ -35,7 +33,7 @@ export const signupUser = async (
   data: SignupRequest
 ): Promise<SignupResponse> => {
   const response = await api.post(
-    `${MSW_BASE_URL}${API_PATHS.accounts.signup}`,
+    `${API_BASE_URL}${API_PATHS.accounts.signup}`,
     data
   );
   return response.data;

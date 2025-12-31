@@ -1,3 +1,5 @@
+import { EXAM_LAYOUT_BASE } from "@/constants";
+import { cn } from "@/lib";
 import { CircleAlertIcon, XIcon } from "lucide-react";
 
 interface ExamFocusWarningProps {
@@ -6,7 +8,7 @@ interface ExamFocusWarningProps {
 
 function ExamFocusWarning({ onClose }: ExamFocusWarningProps) {
   return (
-    <div className="mx-auto mt-8 mb-15 max-w-7xl px-0.5">
+    <div className={cn(EXAM_LAYOUT_BASE, "mb-15")}>
       <div className="bg-primary-100 flex h-26 items-start gap-3 rounded-lg px-6 py-5">
         <CircleAlertIcon
           fill="#fb2c36"

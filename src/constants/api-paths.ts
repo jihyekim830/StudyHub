@@ -22,6 +22,8 @@ export const API_PATHS = {
     },
     submissions: {
       base: `${API_PREFIX}/exams/submissions`,
+      result: (submissionId: number) =>
+        `${API_PREFIX}/exams/submissions/${submissionId}}`,
     },
   },
   accounts: {

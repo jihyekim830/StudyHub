@@ -1,10 +1,14 @@
 import {
   CheatingCountIcons,
+  ExamBottomButton,
   ExamCheatingModal,
+  ExamContentContainer,
   ExamFocusWarning,
+  ExamHeaderContainer,
+  ExamHeaderTitle,
   ExamQuestion,
 } from "@/components";
-import { Button, LoadingUi } from "@/components/common";
+import { LoadingUi } from "@/components/common";
 import { NotFound } from "@/components/common/not-found";
 import {
   useExamAnswers,
@@ -17,7 +21,6 @@ import {
 } from "@/hooks";
 import { useExamQuestionList } from "@/hooks/api";
 import { cn } from "@/lib";
-import { ArrowLeftIcon } from "lucide-react";
 import { useState } from "react";
 import { useLocation, useParams } from "react-router";
 
@@ -81,55 +84,47 @@ function TakeExam() {
     return <NotFound statusCode={error.response?.status ?? error.message} />;
   if (!deploymentId || !durationTime) return <NotFound statusCode={404} />;
   return (
-    <div>
-      <header className="flex h-32 items-center border-b border-b-neutral-400 bg-neutral-100">
-        <div className="mx-auto flex max-w-7xl grow items-center px-5">
-          <div className="flex grow items-start gap-3">
-            <ArrowLeftIcon className="mt-1 size-6" />
-            <div className="flex flex-col gap-1">
-              <span className="text-xl font-semibold">{examDto?.examName}</span>
-              <span className="text-neutral-700">
-                집중해서 천천히, 끝까지 응시해 주세요. 응원할게요💪
-              </span>
-            </div>
-          </div>
-          <div className={cn(EXAM_INFO_BADGE_BASE, "text-primary-700 mr-5.5")}>
-            {formatRemainingTime(remainingMs)} 뒤에 끝나요
-          </div>
-          <div className={cn(EXAM_INFO_BADGE_BASE, "gap-3.5")}>
-            <span>부정행위</span>
-            <CheatingCountIcons cheatingCount={cheatingCount} />
-          </div>
+    <>
+      <ExamHeaderContainer>
+        <ExamHeaderTitle
+          title={examDto?.examName ?? "쪽지시험"}
+          subText="집중해서 천천히, 끝까지 응시해 주세요. 응원할게요💪"
+        />
+        <div className={cn(EXAM_INFO_BADGE_BASE, "text-primary-700 mr-5.5")}>
+          {formatRemainingTime(remainingMs)} 뒤에 끝나요
         </div>
-      </header>
-      {isPopUpOpen && (
-        <ExamFocusWarning onClose={() => setIsPopUpOpen(false)} />
-      )}
-      <ul className="mx-auto mt-8 flex max-w-7xl flex-col gap-10">
-        {examDto?.questions?.map((question) => (
-          <ExamQuestion
-            key={question.questionId}
-            question={question}
-            value={answers[question.questionId]?.submittedAnswer}
-            onChange={handleAnswerChange}
-          />
-        ))}
-      </ul>
-      <ExamCheatingModal
-        modalControl={modalControl}
-        cheatingCount={cheatingCount}
-        isForcedSubmitted={isForcedSubmitted}
-      />
-      <div className="flex pt-58.5 pb-24.5">
-        <Button
-          className="mx-auto h-16 w-31 p-0 text-lg"
+        <div className={cn(EXAM_INFO_BADGE_BASE, "gap-3.5")}>
+          <span>부정행위</span>
+          <CheatingCountIcons cheatingCount={cheatingCount} />
+        </div>
+      </ExamHeaderContainer>
+      <main className="mt-40">
+        {isPopUpOpen && (
+          <ExamFocusWarning onClose={() => setIsPopUpOpen(false)} />
+        )}
+        <ExamContentContainer>
+          {examDto?.questions?.map((question) => (
+            <ExamQuestion
+              key={question.questionId}
+              question={question}
+              value={answers[question.questionId]?.submittedAnswer}
+              onChange={handleAnswerChange}
+            />
+          ))}
+        </ExamContentContainer>
+        <ExamCheatingModal
+          modalControl={modalControl}
+          cheatingCount={cheatingCount}
+          isForcedSubmitted={isForcedSubmitted}
+        />
+        <ExamBottomButton
+          type="button"
+          label="제출하기"
           onClick={handleExamSubmit}
           disabled={isPending}
-        >
-          제출하기
-        </Button>
-      </div>
-    </div>
+        />
+      </main>
+    </>
   );
 }
 

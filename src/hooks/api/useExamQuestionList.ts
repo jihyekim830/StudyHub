@@ -1,10 +1,6 @@
 import { getExamQuestionList } from "@/api/exams";
-import type {
-  Question,
-  QuestionDto,
-  QuestionType,
-  QuestionTypeDto,
-} from "@/types";
+import { EXAM_QUESTION_TYPE_DTO_TO_MODEL_MAP } from "@/constants";
+import type { Question, QuestionDto } from "@/types";
 import type {
   ExamQuestionListResponse,
   ExamQuestionListResponseDto,
@@ -64,7 +60,7 @@ const convertExamQuestionList = (
 const convertExamQuestion = (question: QuestionDto): Question => ({
   questionId: question.question_id,
   number: question.number,
-  type: QUESTION_TYPE_MAP[question.type],
+  type: EXAM_QUESTION_TYPE_DTO_TO_MODEL_MAP[question.type],
   question: question.question,
   point: question.point,
   prompt: question.prompt,
@@ -72,12 +68,3 @@ const convertExamQuestion = (question: QuestionDto): Question => ({
   options: question.options,
   answerInput: question.answer_input,
 });
-
-const QUESTION_TYPE_MAP: Record<QuestionTypeDto, QuestionType> = {
-  fill_blank: "fillBlank",
-  multiple_choice: "multipleChoice",
-  ordering: "ordering",
-  ox: "ox",
-  short_answer: "shortAnswer",
-  single_choice: "singleChoice",
-};

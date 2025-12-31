@@ -27,24 +27,24 @@ const postSendEmail = http.post(
 const postVerifyEmail = http.post(
   `${MSW_BASE_URL}${API_PATHS.accounts.verification.verfiyEmail}`,
   async ({ request }) => {
-    const { email, code } = (await request.clone().json()) as {
+    const { email, email_code } = (await request.clone().json()) as {
       email: string;
-      code: string;
+      email_code: string;
     };
 
-    if (!email || !code) {
+    if (!email || !email_code) {
       return HttpResponse.json(
         {
           error_detail: {
             email: email ? undefined : ["이 필드는 필수 항목입니다."],
-            code: code ? undefined : ["이 필드는 필수 항목입니다."],
+            email_code: email_code ? undefined : ["이 필드는 필수 항목입니다."],
           },
         },
         { status: 400 }
       );
     }
 
-    if (code !== "qwer12") {
+    if (email_code !== "qwer12") {
       return HttpResponse.json(
         {
           error_detail: {
@@ -92,24 +92,24 @@ const postSendSMS = http.post(
 const postVerifySMS = http.post(
   `${MSW_BASE_URL}${API_PATHS.accounts.verification.verfiySMS}`,
   async ({ request }) => {
-    const { phone_number, code } = (await request.clone().json()) as {
+    const { phone_number, sms_code } = (await request.clone().json()) as {
       phone_number: string;
-      code: string;
+      sms_code: string;
     };
 
-    if (!phone_number || !code) {
+    if (!phone_number || !sms_code) {
       return HttpResponse.json(
         {
           error_detail: {
             email: phone_number ? undefined : ["이 필드는 필수 항목입니다."],
-            code: code ? undefined : ["이 필드는 필수 항목입니다."],
+            code: sms_code ? undefined : ["이 필드는 필수 항목입니다."],
           },
         },
         { status: 400 }
       );
     }
 
-    if (code !== "111111") {
+    if (sms_code !== "111111") {
       return HttpResponse.json(
         {
           error_detail: {

@@ -23,27 +23,29 @@ export default function NicknameField({
   const { mutate: checkNickname, isPending } = useNicknameCheck();
 
   const getInputVariant = () => {
-    if (errors.nickname) return "danger";
     if (isVerified) return "success";
+    if (errors.nickname) return "danger";
     return "default";
   };
 
   useEffect(() => {
-    setIsVerified(false);
-    onVerifyStatusChange(false);
-    if (nicknameValue) clearErrors("nickname");
-  }, [nicknameValue, clearErrors, onVerifyStatusChange]);
+    if (isVerified) {
+      setIsVerified(false);
+      onVerifyStatusChange(false);
+    }
+    if (errors.nickname) {
+      clearErrors("nickname");
+    }
+  }, [nicknameValue]);
 
   const handleCheck = () => {
-    if (!nicknameValue || errors.nickname) return;
+    if (!nicknameValue) return;
 
     checkNickname(nicknameValue, {
-      onSuccess: (data) => {
-        if (data.available) {
-          setIsVerified(true);
-          onVerifyStatusChange(true);
-          clearErrors("nickname");
-        }
+      onSuccess: () => {
+        setIsVerified(true);
+        onVerifyStatusChange(true);
+        clearErrors("nickname");
       },
       onError: (error) => {
         const serverMessage =
@@ -66,16 +68,14 @@ export default function NicknameField({
           className="flex-1"
           {...register("nickname")}
           variant={getInputVariant()}
-          errorMessage={errors.nickname?.message as string}
+          errorMessage={isVerified ? "" : (errors.nickname?.message as string)}
           placeholder="닉네임을 입력해주세요"
         />
         <Button
           type="button"
           variant="outline"
           className="h-12 w-28 p-0"
-          disabled={
-            !nicknameValue || !!errors.nickname || isPending || isVerified
-          }
+          disabled={!nicknameValue || isPending || isVerified}
           onClick={handleCheck}
         >
           {isPending ? "확인 중..." : isVerified ? "사용가능" : "중복확인"}

@@ -141,14 +141,16 @@ export default function SMSVerification({ onVerify }: SMSVerificationProps) {
           type="button"
           variant="outline"
           className="h-12 w-28 p-0"
-          disabled={phoneValues.some((v) => !v) || isSending || isVerified}
+          disabled={
+            phoneValues.some((value) => !value) || isSending || isVerified
+          }
           onClick={handleSendCode}
         >
           {isSending
             ? "전송 중..."
             : isSMSSent
               ? "다시전송하기"
-              : "인증코드전송"}
+              : "인증번호전송"}
         </Button>
       </div>
       <div className="flex items-center gap-2">

@@ -26,7 +26,6 @@ export const useLoginMutation = (options?: LoginMutationOptions) => {
     ...options,
     onSuccess: async (data, variables, context) => {
       const { access_token: accessToken } = data;
-      console.log("로그인 성공!", data);
 
       setAccessToken(accessToken);
 
@@ -38,11 +37,6 @@ export const useLoginMutation = (options?: LoginMutationOptions) => {
 
           const cleanuserInfo = transformUserInfo(rawUserInfo);
           setUserInfo(cleanuserInfo);
-
-          console.log(
-            `유저 정보 저장 완료 (시도: ${attempt}회):`,
-            cleanuserInfo
-          );
           navigate("/");
           break;
         } catch (error) {

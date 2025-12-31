@@ -5,6 +5,7 @@ import SignupPage from "@/pages/SignupPage";
 import EmailSignupPage from "@/pages/EmailSignupPage";
 import TakeExam from "@/pages/TakeExam";
 import ChangePasswordPage from "@/pages/ChangePasswordPage";
+import ExamResult from "@/pages/ExamResult";
 
 export {
   Home,
@@ -14,4 +15,5 @@ export {
   Exams,
   TakeExam,
   ChangePasswordPage,
+  ExamResult,
 };

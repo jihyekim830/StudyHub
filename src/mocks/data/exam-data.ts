@@ -1,4 +1,4 @@
-import type { ExamDto, QuestionDto } from "@/types";
+import type { ExamDto, QuestionDto, QuestionResultDto } from "@/types";
 import type { ExamCheatingResponseDto } from "@/types/api-response-type/exam-response-types";
 
 export const examList: ExamDto[] = [
@@ -225,3 +225,123 @@ export const cheatingState: ExamCheatingResponseDto = {
   cheating_count: 0,
   is_forced_submitted: false,
 };
+
+export const questionResultList: QuestionResultDto[] = [
+  {
+    question_id: 1,
+    number: 1,
+    type: "single_choice",
+    question:
+      "TypeScript 타입 호환성 규칙상, 안전하게 허용되는 상·하위 타입 간 값 할당 방식은 무엇인가요?",
+    prompt: "",
+    point: 10,
+    options: [
+      "상위 타입 값을 하위 타입 변수에 할당",
+      "하위 타입 값을 상위 타입 변수에 할당",
+      "서로소 유니온 타입 간 값은 일부 유니온 타입 변수에 할당",
+      "하위 타입 값을 상위 타입 변수에 할당2",
+    ],
+    submitted_answer: "상위 타입 값을 하위 타입 변수에 할당",
+    correct_answer: "서로소 유니온 타입 간 값은 일부 유니온 타입 변수에 할당",
+    is_correct: false,
+    explanation:
+      "하위 타입 값을 상위 타입으로 취급하는 것을 업캐스팅이라고하며, 이는 대부분의 경우 안전하게 허용됩니다. ",
+  },
+  {
+    question_id: 2,
+    number: 2,
+    type: "multiple_choice",
+    question: "다음 중 TypeScript의 특징으로 올바른 것을 모두 골라주세요.",
+    prompt: "",
+    point: 15,
+    options: [
+      "정적 타입 검사 지원",
+      "런타임 시 타입 오류 발생",
+      "자바스크립트와 호환됨",
+      "브라우저가 직접 실행함",
+      "인터페이스와 제네릭을 지원함",
+    ],
+    submitted_answer: ["인터페이스와 제네릭을 지원함", "정적 타입 검사 지원"],
+    correct_answer: ["정적 타입 검사 지원", "인터페이스와 제네릭을 지원함"],
+    is_correct: true,
+    explanation:
+      "하위 타입 값을 상위 타입으로 취급하는 것을 업캐스팅이라고하며, 이는 대부분의 경우 안전하게 허용됩니다. 다운캐스팅을 일반적으로 허용되지 않아요. 다운캐스팅을 일반적으로 허용되지 않아요.",
+  },
+  {
+    question_id: 3,
+    number: 3,
+    type: "short_answer",
+    question:
+      "TypeScript 타입 호환성 규칙상, 안전하게 허용되는 상·하위 타입 간 값 할당 방식은 무엇인가요? 안전하게 허용되는 상·하위 타입 간 값 할당 방식은 무엇인가요?",
+    prompt: "",
+    point: 10,
+    options: [],
+    submitted_answer: "정적 타입 검사 지원",
+    correct_answer: "정적 타입 검사 지원",
+    is_correct: true,
+    explanation:
+      "하위 타입 값을 상위 타입으로 취급하는 것을 업캐스팅이라고하며, 이는 대부분의 경우 안전하게 허용됩니다. 다운캐스팅을 일반적으로 허용되지 않아요. 다운캐스팅을 일반적으로 허용되지 않아요.",
+  },
+  {
+    question_id: 4,
+    number: 4,
+    type: "short_answer",
+    question:
+      "TypeScript 타입 호환성 규칙상, 안전하게 허용되는 상·하위 타입 간 값 할당 방식은 무엇인가요?",
+    prompt: "",
+    point: 10,
+    options: [],
+    submitted_answer: "",
+    correct_answer: "업캐스팅",
+    is_correct: false,
+    explanation:
+      "하위 타입 값을 상위 타입으로 취급하는 것을 업캐스팅이라고하며, 이는 대부분의 경우 안전하게 허용됩니다.",
+  },
+  {
+    question_id: 5,
+    number: 5,
+    type: "fill_blank",
+    question:
+      "TypeScript 타입 호환성 규칙상, 안전하게 허용되는 상·하위 타입 간 값 할당 방식은 무엇인가요?",
+    prompt:
+      "변수나 함수의 매개변수, 반환값에 타입을 명시하는 것을 __ 이라고 한다. interface 또는 type 키워드를 사용하여 객체의 구조를 정의할 수 있는데, 이렇게 만든 타입을 __ 이라고 부른다.",
+    point: 10,
+    options: [],
+    submitted_answer: ["정답1", "정답2"],
+    correct_answer: ["정답1", "정답3"],
+    is_correct: false,
+    explanation: "",
+  },
+  {
+    question_id: 6,
+    number: 6,
+    type: "ox",
+    question: "TypeScript에서 any 타입을 사용하면 모든 타입과 호환된다.",
+    prompt: "",
+    point: 15,
+    options: ["O", "X"],
+    submitted_answer: "O",
+    correct_answer: "O",
+    is_correct: true,
+    explanation: "",
+  },
+  {
+    question_id: 7,
+    number: 7,
+    type: "ordering",
+    question:
+      "코드가 실행되기까지의 과정을 순서 없이 모아뒀어요. 올바른 순서로 정리해볼까요?",
+    prompt: "",
+    point: 10,
+    options: [
+      "Typescript 파일 작성",
+      "Transpile 작업 실행",
+      "자바스크립트로 변환",
+      "컴파일 결과 실행",
+    ],
+    submitted_answer: ["A", "B", "C", "D"],
+    correct_answer: ["B", "A", "C", "D"],
+    is_correct: false,
+    explanation: "",
+  },
+];

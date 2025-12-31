@@ -10,6 +10,7 @@ import SMSVerification from "@/components/auth/SMSVerification";
 import { useState } from "react";
 import { useSignup } from "@/hooks/useSignup";
 import type { SignupRequest } from "@/types/api-request-type/auth-request-type";
+import { formatBirthday } from "@/lib/authUtils";
 
 export default function EmailSignupPage() {
   const [isNicknameVerified, setIsNicknameVerified] = useState(false);
@@ -38,22 +39,15 @@ export default function EmailSignupPage() {
     !isValid || !isNicknameVerified || !isEmailVerified || !isSmsVerified;
 
   const onSubmit = (data: SignupSchemaType) => {
-    const formattedBirthday = data.birthday.replace(
-      /(\d{4})(\d{2})(\d{2})/,
-      "$1-$2-$3"
-    );
-
     const signupData: SignupRequest = {
       password: data.password,
       nickname: data.nickname,
       name: data.name,
-      birthday: formattedBirthday,
+      birthday: data.birthday,
       gender: data.gender,
       email_token: data.emailToken,
       sms_token: data.smsToken,
     };
-
-    console.log("서버로 전송할 최종 데이터:", signupData);
 
     signup(signupData);
   };
@@ -92,10 +86,14 @@ export default function EmailSignupPage() {
               생년월일<span className="text-red-500">*</span>
             </label>
             <Input
-              {...register("birthday")}
-              errorMessage={errors.birthday?.message}
-              maxLength={8}
-              placeholder="8자리 숫자로 입력해주세요 (ex. 20001110)"
+              {...register("birthday", {
+                onChange: (e) => {
+                  const formatted = formatBirthday(e.target.value);
+                  setValue("birthday", formatted);
+                },
+              })}
+              placeholder="YYYY-MM-DD"
+              maxLength={10}
             />
           </section>
 

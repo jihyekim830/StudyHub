@@ -13,6 +13,7 @@ import useExamStatusPolling from "@/hooks/api/useExamStatusPolling";
 import useSubmitExam from "@/hooks/api/useSubmitExam";
 import { useNicknameCheck } from "@/hooks/api/useNicknameCheck";
 import useChangePassword from "@/hooks/api/useChangePassword";
+import useExamResult from "@/hooks/api/useExamResult";
 
 export {
   useExamList,
@@ -30,4 +31,5 @@ export {
   useSubmitExam,
   useNicknameCheck,
   useChangePassword,
+  useExamResult,
 };

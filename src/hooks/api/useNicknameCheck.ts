@@ -4,7 +4,7 @@ import { AxiosError } from "axios";
 
 type NicknameCheckOptions = Omit<
   UseMutationOptions<
-    { available: boolean; detail?: string },
+    { detail: string },
     AxiosError<{ error_detail: string }>,
     string
   >,

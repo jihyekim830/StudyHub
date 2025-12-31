@@ -16,6 +16,9 @@ import type {
   ExamDeploymentStatus,
   AnswerDto,
   Answer,
+  QuestionResultDto,
+  QuestionResult,
+  ResultAnswerValue,
 } from "@/types/exam-types";
 
 export type {
@@ -40,4 +43,7 @@ export type {
   ExamDeploymentStatus,
   AnswerDto,
   Answer,
+  QuestionResultDto,
+  QuestionResult,
+  ResultAnswerValue,
 };

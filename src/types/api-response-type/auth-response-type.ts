@@ -37,7 +37,8 @@ export interface SignupResponse {
 }
 
 export interface SignupErrorResponse {
-  error_detail: string | { [key: string]: string[] };
+  error_detail?: string;
+  errors?: Record<string, string[]>;
 }
 
 export interface EmailVerifyServerResponse {

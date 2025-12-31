@@ -68,24 +68,30 @@ export type QuestionType =
   | "ordering"
   | "fillBlank";
 
-export interface QuestionDto {
+interface QuestionBaseDto {
   question_id: number;
   number: number;
   type: QuestionTypeDto;
   question: string;
   point: number;
+}
+
+interface QuestionBase {
+  questionId: number;
+  number: number;
+  type: QuestionType;
+  question: string;
+  point: number;
+}
+
+export interface QuestionDto extends QuestionBaseDto {
   prompt: string | null;
   blank_count: number | null;
   options: string[] | null;
   answer_input: string | string[] | null;
 }
 
-export interface Question {
-  questionId: number;
-  number: number;
-  type: QuestionType;
-  question: string;
-  point: number;
+export interface Question extends QuestionBase {
   prompt: string | null;
   blankCount: number | null;
   options: string[] | null;
@@ -114,4 +120,24 @@ export interface AnswerDto {
 export interface Answer {
   type: QuestionType;
   submittedAnswer: string | string[] | null;
+}
+
+export type ResultAnswerValue = string | string[];
+
+export interface QuestionResultDto extends QuestionBaseDto {
+  prompt: string; // 빈 문자열이면 없음
+  options: string[]; // 빈 배열이면 없음
+  submitted_answer: ResultAnswerValue | null; // null이 아니면 correct_answer와 타입 동일
+  correct_answer: ResultAnswerValue;
+  is_correct: boolean;
+  explanation: string; // 빈 문자열이면 없음
+}
+
+export interface QuestionResult extends QuestionBase {
+  prompt: string; // 빈 문자열이면 없음
+  options: string[]; // 빈 배열이면 없음
+  submittedAnswer: ResultAnswerValue | null; // null이 아니면 correct_answer와 타입 동일
+  correctAnswer: ResultAnswerValue;
+  isCorrect: boolean;
+  explanation: string; // 빈 문자열이면 없음
 }

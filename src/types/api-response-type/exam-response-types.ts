@@ -4,6 +4,8 @@ import type {
   ExamDto,
   Question,
   QuestionDto,
+  QuestionResult,
+  QuestionResultDto,
 } from "@/types";
 
 export interface ExamListResponseDto {
@@ -68,4 +70,24 @@ export interface ExamSubmitResponse {
   score: number;
   correctAnswerCount: number;
   redirectUrl: string;
+}
+
+export interface ExamResultResponseDto {
+  exam_title: string;
+  thumbnail_img_url: string;
+  duration: string;
+  score: number;
+  total_score: number;
+  cheating_count: number;
+  questions: QuestionResultDto[];
+}
+
+export interface ExamResultResponse {
+  examTitle: string;
+  thumbnailImgUrl: string;
+  duration: string;
+  score: number;
+  totalScore: number;
+  cheatingCount: number;
+  questions: QuestionResult[];
 }

@@ -5,6 +5,7 @@ import type {
   ExamCheatingResponseDto,
   ExamListResponseDto,
   ExamQuestionListResponseDto,
+  ExamResultResponseDto,
   ExamStatusResponseDto,
   ExamSubmitResponseDto,
 } from "@/types/api-response-type/exam-response-types";
@@ -68,6 +69,16 @@ export const submitExam = async ({
   const response = await api.post(
     `${MSW_BASE_URL}${API_PATHS.exams.submissions.base}`,
     { started_at, cheating_count, answers }
+  );
+
+  return response.data;
+};
+
+export const getExamResult = async (
+  submissionId: number
+): Promise<ExamResultResponseDto> => {
+  const response = await api.get(
+    `${MSW_BASE_URL}${API_PATHS.exams.submissions.result(submissionId)}`
   );
 
   return response.data;

@@ -8,6 +8,7 @@ import type {
   SignupResponse,
   SignupErrorResponse,
 } from "@/types/api-response-type/auth-response-type";
+import { extractErrorMessage } from "@/lib/authUtils";
 
 type UseSignupOptions = Omit<
   UseMutationOptions<
@@ -34,12 +35,7 @@ export const useSignup = (options?: UseSignupOptions) => {
       navigate("/login");
     },
     onError: (error) => {
-      const errorDetail = error.response?.data.error_detail;
-
-      const message =
-        typeof errorDetail === "string"
-          ? errorDetail
-          : "입력 정보를 다시 확인해주세요.";
+      const message = extractErrorMessage(error) || "회원가입에 실패했습니다.";
       triggerToast({ text: message, status: "danger", variant: "small" });
     },
   });

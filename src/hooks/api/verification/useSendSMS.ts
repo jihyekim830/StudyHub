@@ -1,4 +1,5 @@
-import { API_PATHS, MSW_BASE_URL } from "@/constants";
+import { API_PATHS } from "@/constants";
+import { API_BASE_URL } from "@/constants/api-paths";
 import { api } from "@/lib";
 import { useMutation, type UseMutationOptions } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
@@ -12,7 +13,7 @@ export default function useSendSMS(options?: SendSMSMutationOptons) {
   return useMutation({
     mutationFn: async ({ phoneNumber }) => {
       await api.post(
-        `${MSW_BASE_URL}${API_PATHS.accounts.verification.sendSMS}`,
+        `${API_BASE_URL}${API_PATHS.accounts.verification.sendSMS}`,
         {
           phone_number: phoneNumber,
         }

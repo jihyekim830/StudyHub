@@ -4,6 +4,7 @@ import { Input, Button } from "@/components/common";
 import type { EmailVerificationSchemaType } from "@/schemas/authSchemas";
 import { useSendEmail, useVerifyEmail } from "@/hooks/api";
 import { useToast } from "@/hooks";
+import { extractErrorMessage } from "@/lib/authUtils";
 
 interface EmailVerificationProps {
   onVerify: (status: boolean) => void;
@@ -42,9 +43,12 @@ export default function EmailVerification({
         variant: "small",
       });
     },
-    onError: () => {
+    onError: (error) => {
+      const message = extractErrorMessage(error);
       triggerToast({
-        text: "인증코드 전송에 실패했습니다.",
+        text:
+          message ||
+          "인증코드 전송에 실패했습니다. 이메일을 다시 확인해주세요.",
         status: "danger",
         variant: "small",
       });

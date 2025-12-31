@@ -20,7 +20,11 @@ import {
   ReactNativeIcon,
   TypescriptIcon,
 } from "@/assets/icons/subject-icons";
-import type { ExamCategoryOption, QuestionType } from "@/types";
+import type {
+  ExamCategoryOption,
+  QuestionType,
+  QuestionTypeDto,
+} from "@/types";
 
 export const EXAM_CATEGORY_OPTIONS: ExamCategoryOption[] = [
   { label: "전체보기", value: "all" },
@@ -80,3 +84,17 @@ export const EXAM_CHEATING_MODAL_CONTENT_MAP: Record<
     icon: ModalRedIcon,
   },
 };
+
+export const EXAM_QUESTION_TYPE_DTO_TO_MODEL_MAP: Record<
+  QuestionTypeDto,
+  QuestionType
+> = {
+  fill_blank: "fillBlank",
+  multiple_choice: "multipleChoice",
+  ordering: "ordering",
+  ox: "ox",
+  short_answer: "shortAnswer",
+  single_choice: "singleChoice",
+};
+
+export const EXAM_LAYOUT_BASE = "mx-auto max-w-6xl px-6";
