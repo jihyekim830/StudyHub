@@ -1,3 +1,4 @@
+import { EXAM_QUESTION_LABEL_START_CHAR_CODE } from "@/constants";
 import { cn } from "@/lib";
 import type { Question } from "@/types";
 import { memo, useEffect, useMemo, useState } from "react";
@@ -11,8 +12,6 @@ interface OrderingProps {
   ) => void;
 }
 
-const OPTION_LABEL_START_CODE = 65;
-
 const Ordering = memo(function Ordering({
   question,
   value: _value,
@@ -24,7 +23,7 @@ const Ordering = memo(function Ordering({
     () =>
       new Map(
         question.options?.map((option, index) => [
-          String.fromCharCode(OPTION_LABEL_START_CODE + index),
+          String.fromCharCode(EXAM_QUESTION_LABEL_START_CHAR_CODE + index),
           option,
         ])
       ),
@@ -64,7 +63,7 @@ const Ordering = memo(function Ordering({
             className="flex items-center gap-2"
           >
             <div className="bg-primary-100 text-primary-600 flex size-8 items-center justify-center rounded-sm text-lg font-medium">
-              {String.fromCharCode(OPTION_LABEL_START_CODE + index)}
+              {String.fromCharCode(EXAM_QUESTION_LABEL_START_CHAR_CODE + index)}
             </div>
             <span>{option}</span>
           </div>

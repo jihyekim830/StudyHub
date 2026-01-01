@@ -7,7 +7,7 @@ interface ExamContentContainerProps {
 
 function ExamContentContainer({ children }: ExamContentContainerProps) {
   return (
-    <ul className={cn(EXAM_LAYOUT_BASE, "mt-15 flex flex-col gap-10")}>
+    <ul className={cn(EXAM_LAYOUT_BASE, "mt-15 flex flex-col gap-24")}>
       {children}
     </ul>
   );

@@ -1,3 +1,4 @@
+import { EXAM_QUESTION_OX_OPTIONS } from "@/constants";
 import { cn } from "@/lib";
 import type { Question } from "@/types";
 import { CheckIcon, CircleIcon, XIcon } from "lucide-react";
@@ -12,11 +13,6 @@ interface OxProps {
   ) => void;
 }
 
-const OPTIONS = [
-  { label: "맞아요", value: "O" },
-  { label: "아니에요", value: "X" },
-] as const;
-
 const ICON_BASE = "size-5 text-neutral-400";
 
 const ICON_STROKE = 3;
@@ -24,7 +20,7 @@ const ICON_STROKE = 3;
 const Ox = memo(function Ox({ question, value, onChange }: OxProps) {
   return (
     <div className="flex flex-col gap-2.5">
-      {OPTIONS.map((option) => (
+      {EXAM_QUESTION_OX_OPTIONS.map((option) => (
         <button
           key={`${question.questionId}-ox-${option.value}`}
           className={cn(
@@ -37,14 +33,14 @@ const Ox = memo(function Ox({ question, value, onChange }: OxProps) {
           {option.value === "O" ? (
             <CircleIcon
               className={cn(ICON_BASE, {
-                "text-success": option.value === value,
+                "text-green-500": option.value === value,
               })}
               strokeWidth={ICON_STROKE}
             />
           ) : (
             <XIcon
               className={cn(ICON_BASE, {
-                "text-danger": option.value === value,
+                "text-red-600": option.value === value,
               })}
               strokeWidth={ICON_STROKE}
             />

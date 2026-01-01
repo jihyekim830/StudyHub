@@ -1,3 +1,4 @@
+import { EXAM_QUESTION_CHECKBOX_STYLE_MAP } from "@/constants";
 import { cn } from "@/lib";
 import type { Question } from "@/types";
 import { CheckIcon } from "lucide-react";
@@ -39,9 +40,9 @@ const MultipleChoice = memo(function MultipleChoice({
             checked={selectedOptions.includes(option)}
             onChange={() => handleOptionToggle(option)}
             className={cn(
-              "peer size-5 appearance-none rounded-xs border border-neutral-400 bg-white",
-              "checked:bg-primary-700 checked:border-primary-700",
-              "focus:outline-none"
+              EXAM_QUESTION_CHECKBOX_STYLE_MAP.base,
+              EXAM_QUESTION_CHECKBOX_STYLE_MAP.checked,
+              EXAM_QUESTION_CHECKBOX_STYLE_MAP.focus
             )}
           />
           <CheckIcon

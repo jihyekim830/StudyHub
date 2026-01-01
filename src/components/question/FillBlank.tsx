@@ -1,3 +1,7 @@
+import {
+  EXAM_QUESTION_LABEL_START_CHAR_CODE,
+  EXAM_QUESTION_BLANK_TOKEN,
+} from "@/constants";
 import { cn } from "@/lib";
 import type { Question } from "@/types";
 import { memo } from "react";
@@ -11,16 +15,12 @@ interface FillBlankProps {
   ) => void;
 }
 
-const BLANK_TOKEN = "__";
-
-const BLANK_LABEL_START_CODE = 65;
-
 const FillBlank = memo(function FillBlank({
   question,
   value,
   onChange,
 }: FillBlankProps) {
-  const promptParts = question.prompt?.split(BLANK_TOKEN) ?? [];
+  const promptParts = question.prompt?.split(EXAM_QUESTION_BLANK_TOKEN) ?? [];
   const answers = Array.isArray(value)
     ? value
     : Array.from({ length: question.blankCount ?? 0 }, () => "");
@@ -42,7 +42,7 @@ const FillBlank = memo(function FillBlank({
           <span key={`${question.questionId}-prompt-${index}`}>
             {part}
             {index < promptParts.length - 1 && (
-              <strong>{`(${String.fromCharCode(BLANK_LABEL_START_CODE + index)}) ________`}</strong>
+              <strong>{`(${String.fromCharCode(EXAM_QUESTION_LABEL_START_CHAR_CODE + index)}) ________`}</strong>
             )}
           </span>
         ))}
@@ -54,7 +54,7 @@ const FillBlank = memo(function FillBlank({
             className="flex h-12 w-4/12 items-center gap-2 rounded-sm bg-neutral-200 px-4"
           >
             <span className="text-lg font-bold">
-              {String.fromCharCode(BLANK_LABEL_START_CODE + index)}
+              {String.fromCharCode(EXAM_QUESTION_LABEL_START_CHAR_CODE + index)}
             </span>
             <input
               type="text"

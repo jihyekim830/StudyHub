@@ -1,3 +1,4 @@
+import { EXAM_QUESTION_RADIO_STYLE_MAP } from "@/constants";
 import { cn } from "@/lib";
 import type { Question } from "@/types";
 import { memo } from "react";
@@ -25,11 +26,11 @@ const SingleChoice = memo(function SingleChoice({
         >
           <input
             type="radio"
-            name={question.question}
+            name={`${question.questionId}-${question.number}`}
             className={cn(
-              "size-4 appearance-none rounded-full border-4 border-white bg-neutral-200 shadow-[0_0_0_1px] shadow-neutral-400",
-              "checked:border-primary-700 checked:shadow-primary-700 checked:bg-white",
-              "focus:outline-none"
+              EXAM_QUESTION_RADIO_STYLE_MAP.base,
+              EXAM_QUESTION_RADIO_STYLE_MAP.checked,
+              EXAM_QUESTION_RADIO_STYLE_MAP.focus
             )}
             checked={option === value}
             onChange={() => onChange(question.questionId, option)}

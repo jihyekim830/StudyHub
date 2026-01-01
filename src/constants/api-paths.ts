@@ -23,7 +23,7 @@ export const API_PATHS = {
     submissions: {
       base: `${API_PREFIX}/exams/submissions`,
       result: (submissionId: number) =>
-        `${API_PREFIX}/exams/submissions/${submissionId}}`,
+        `${API_PREFIX}/exams/submissions/${submissionId}`,
     },
   },
   accounts: {
@@ -31,6 +31,7 @@ export const API_PATHS = {
     checkNickname: `${API_PREFIX}/accounts/check-nickname`,
     signup: `${API_PREFIX}/accounts/signup`,
     availableCourses: `${API_PREFIX}/accounts/available-courses`,
+    enrolledCourses: `${API_PREFIX}/accounts/me/enrolled-courses`,
     enrollStudent: `${API_PREFIX}/accounts/enroll-student`,
     verification: {
       sendEmail: `${API_PREFIX}${VERIFICATION_API_PREFIX}/send-email`,

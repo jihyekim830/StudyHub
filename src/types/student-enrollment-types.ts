@@ -23,3 +23,8 @@ export interface AvailableCourse {
   cohort: Omit<Cohort, "status">;
   course: Pick<Course, "id" | "name">;
 }
+
+export interface EnrolledCourse {
+  cohort: Cohort;
+  course: Course;
+}

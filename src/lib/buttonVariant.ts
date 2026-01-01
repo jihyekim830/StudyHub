@@ -18,6 +18,7 @@ export const buttonVariants = cva(
           "active:bg-primary-400 active:border-primary-700 active:text-primary-800",
           "disabled:text-neutral-700 disabled:bg-neutral-200 disabled:border-neutral-400"
         ),
+        neutral: "text-neutral-700 bg-neutral-200 border border-neutral-400",
       },
     },
     defaultVariants: {

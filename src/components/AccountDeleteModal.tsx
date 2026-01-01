@@ -86,7 +86,9 @@ export default function AccountDeleteModal() {
   return (
     <Modal>
       <ModalTrigger>
-        <Button>회원 탈퇴하기</Button>
+        <Button variant={"neutral"} className="w-38">
+          회원 탈퇴하기
+        </Button>
       </ModalTrigger>
       <ModalContent className="w-full max-w-2xl">
         <div className="flex flex-col items-start gap-5">

@@ -6,6 +6,7 @@ import EmailSignupPage from "@/pages/EmailSignupPage";
 import TakeExam from "@/pages/TakeExam";
 import ChangePasswordPage from "@/pages/ChangePasswordPage";
 import ExamResult from "@/pages/ExamResult";
+import MyPage from "@/pages/MyPage";
 
 export {
   Home,
@@ -16,4 +17,5 @@ export {
   TakeExam,
   ChangePasswordPage,
   ExamResult,
+  MyPage,
 };

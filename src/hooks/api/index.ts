@@ -14,6 +14,8 @@ import useSubmitExam from "@/hooks/api/useSubmitExam";
 import { useNicknameCheck } from "@/hooks/api/useNicknameCheck";
 import useChangePassword from "@/hooks/api/useChangePassword";
 import useExamResult from "@/hooks/api/useExamResult";
+import useUserInformation from "@/hooks/api/useUserInformation";
+import useEnrolledCourses from "@/hooks/api/useEnrolledCourses";
 
 export {
   useExamList,
@@ -32,4 +34,6 @@ export {
   useNicknameCheck,
   useChangePassword,
   useExamResult,
+  useUserInformation,
+  useEnrolledCourses,
 };

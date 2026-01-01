@@ -10,6 +10,7 @@ import {
   TakeExam,
   ChangePasswordPage,
   ExamResult,
+  MyPage,
 } from "@/pages";
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
           <Route path="/profile" element={<div>수강생 등록 페이지</div>} />
 
           <Route path="/my-page" element={<MyPageLayout />}>
-            <Route index element={<div>마이페이지</div>} />
+            <Route index element={<MyPage />} />
             <Route path="change-password" element={<ChangePasswordPage />} />
             <Route path="exams" element={<Exams />} />
           </Route>

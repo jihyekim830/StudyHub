@@ -1,3 +1,4 @@
+import { EXAM_QUESTION_SHORT_ANSWER_STYLE_MAP } from "@/constants";
 import { cn } from "@/lib";
 import type { Question } from "@/types";
 import { memo } from "react";
@@ -26,9 +27,9 @@ const ShortAnswer = memo(function ShortAnswer({
       onChange={handleInputChange}
       placeholder="정답을 입력해 주세요."
       className={cn(
-        "h-12 w-3/5 rounded-sm bg-neutral-200 px-4",
-        "focus:outline-none",
-        "placeholder:text-neutral-400"
+        EXAM_QUESTION_SHORT_ANSWER_STYLE_MAP.base,
+        EXAM_QUESTION_SHORT_ANSWER_STYLE_MAP.focus,
+        EXAM_QUESTION_SHORT_ANSWER_STYLE_MAP.placeholder
       )}
     />
   );

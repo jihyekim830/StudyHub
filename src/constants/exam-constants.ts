@@ -98,3 +98,33 @@ export const EXAM_QUESTION_TYPE_DTO_TO_MODEL_MAP: Record<
 };
 
 export const EXAM_LAYOUT_BASE = "mx-auto max-w-6xl px-6";
+
+export const EXAM_QUESTION_CONTENT_LAYOUT_BASE = "pt-5 pl-7";
+
+export const EXAM_QUESTION_RADIO_STYLE_MAP = {
+  base: "size-4 appearance-none rounded-full border-4 border-white bg-neutral-200 shadow-[0_0_0_1px] shadow-neutral-400",
+  checked:
+    "checked:border-primary-700 checked:shadow-primary-700 checked:bg-white",
+  focus: "focus:outline-none",
+} as const;
+
+export const EXAM_QUESTION_CHECKBOX_STYLE_MAP = {
+  base: "peer size-5 appearance-none rounded-xs border border-neutral-400 bg-white",
+  checked: "checked:bg-primary-700 checked:border-primary-700",
+  focus: "focus:outline-none",
+} as const;
+
+export const EXAM_QUESTION_SHORT_ANSWER_STYLE_MAP = {
+  base: "h-12 w-3/5 rounded-sm bg-neutral-200 px-4",
+  focus: "focus:outline-none",
+  placeholder: "placeholder:text-neutral-400",
+} as const;
+
+export const EXAM_QUESTION_BLANK_TOKEN = "__";
+
+export const EXAM_QUESTION_LABEL_START_CHAR_CODE = 65;
+
+export const EXAM_QUESTION_OX_OPTIONS = [
+  { label: "맞아요", value: "O" },
+  { label: "아니에요", value: "X" },
+] as const;

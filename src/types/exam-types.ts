@@ -141,3 +141,10 @@ export interface QuestionResult extends QuestionBase {
   isCorrect: boolean;
   explanation: string; // 빈 문자열이면 없음
 }
+
+interface ExamQuestionResultContentProps {
+  question: QuestionResult;
+}
+
+export type ExamQuestionResultContentComponent =
+  React.FC<ExamQuestionResultContentProps>;
