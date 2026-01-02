@@ -68,30 +68,24 @@ export type QuestionType =
   | "ordering"
   | "fillBlank";
 
-interface QuestionBaseDto {
+export interface QuestionDto {
   question_id: number;
   number: number;
   type: QuestionTypeDto;
   question: string;
   point: number;
-}
-
-interface QuestionBase {
-  questionId: number;
-  number: number;
-  type: QuestionType;
-  question: string;
-  point: number;
-}
-
-export interface QuestionDto extends QuestionBaseDto {
   prompt: string | null;
   blank_count: number | null;
   options: string[] | null;
   answer_input: string | string[] | null;
 }
 
-export interface Question extends QuestionBase {
+export interface Question {
+  questionId: number;
+  number: number;
+  type: QuestionType;
+  question: string;
+  point: number;
   prompt: string | null;
   blankCount: number | null;
   options: string[] | null;
@@ -122,24 +116,32 @@ export interface Answer {
   submittedAnswer: string | string[] | null;
 }
 
-export type ResultAnswerValue = string | string[];
-
-export interface QuestionResultDto extends QuestionBaseDto {
-  prompt: string; // 빈 문자열이면 없음
-  options: string[]; // 빈 배열이면 없음
-  submitted_answer: ResultAnswerValue | null; // null이 아니면 correct_answer와 타입 동일
-  correct_answer: ResultAnswerValue;
+export interface QuestionResultDto {
+  id: number;
+  question: string;
+  prompt: string;
+  blank_count: number;
+  options: string[];
+  type: QuestionTypeDto;
+  answer: string[];
+  point: number;
+  explanation: string;
   is_correct: boolean;
-  explanation: string; // 빈 문자열이면 없음
+  submitted_answer: string[];
 }
 
-export interface QuestionResult extends QuestionBase {
-  prompt: string; // 빈 문자열이면 없음
-  options: string[]; // 빈 배열이면 없음
-  submittedAnswer: ResultAnswerValue | null; // null이 아니면 correct_answer와 타입 동일
-  correctAnswer: ResultAnswerValue;
+export interface QuestionResult {
+  id: number;
+  question: string;
+  prompt: string;
+  blankCount: number;
+  options: string[];
+  type: QuestionType;
+  answer: string[];
+  point: number;
+  explanation: string;
   isCorrect: boolean;
-  explanation: string; // 빈 문자열이면 없음
+  submittedAnswer: string[];
 }
 
 interface ExamQuestionResultContentProps {

@@ -18,16 +18,16 @@ function Ox({ question }: OxProps) {
       <div className="flex flex-col gap-2.5">
         {EXAM_QUESTION_OX_OPTIONS.map((option) => (
           <button
-            key={`${question.questionId}-ox-${option.value}`}
+            key={`${question.id}-ox-${option.value}`}
             className={cn(
               "flex h-12 w-4/12 items-center gap-2 rounded-sm bg-neutral-200 px-4",
               "focus:outline-none",
               {
                 "bg-green-100":
-                  option.value === question.submittedAnswer &&
+                  option.value === question.submittedAnswer[0] &&
                   question.isCorrect,
                 "bg-red-100":
-                  option.value === question.submittedAnswer &&
+                  option.value === question.submittedAnswer[0] &&
                   !question.isCorrect,
               }
             )}
@@ -37,10 +37,10 @@ function Ox({ question }: OxProps) {
               <CircleIcon
                 className={cn(ICON_BASE, {
                   "text-green-500":
-                    option.value === question.submittedAnswer &&
+                    option.value === question.submittedAnswer[0] &&
                     question.isCorrect,
                   "text-red-600":
-                    option.value === question.submittedAnswer &&
+                    option.value === question.submittedAnswer[0] &&
                     !question.isCorrect,
                 })}
                 strokeWidth={ICON_STROKE}
@@ -49,10 +49,10 @@ function Ox({ question }: OxProps) {
               <XIcon
                 className={cn(ICON_BASE, {
                   "text-green-500":
-                    option.value === question.submittedAnswer &&
+                    option.value === question.submittedAnswer[0] &&
                     question.isCorrect,
                   "text-red-600":
-                    option.value === question.submittedAnswer &&
+                    option.value === question.submittedAnswer[0] &&
                     !question.isCorrect,
                 })}
                 strokeWidth={ICON_STROKE}
@@ -62,10 +62,10 @@ function Ox({ question }: OxProps) {
             <CheckIcon
               className={cn(ICON_BASE, {
                 "text-green-500":
-                  option.value === question.submittedAnswer &&
+                  option.value === question.submittedAnswer[0] &&
                   question.isCorrect,
                 "text-red-600":
-                  option.value === question.submittedAnswer &&
+                  option.value === question.submittedAnswer[0] &&
                   !question.isCorrect,
               })}
               strokeWidth={ICON_STROKE}

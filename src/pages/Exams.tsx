@@ -1,6 +1,6 @@
 import { ExamCategorySelector, ExamList } from "@/components";
 import type { ExamCategory } from "@/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NotFound } from "@/components/common/not-found";
 import { LoadingUi } from "@/components/common";
 import { useInfiniteScroll } from "@/hooks";
@@ -33,6 +33,10 @@ function Exams() {
     }) ?? [];
 
   const handleCategoryClick = (category: ExamCategory) => setCategory(category);
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
 
   if (isError)
     return <NotFound statusCode={error.response?.status ?? error.message} />;

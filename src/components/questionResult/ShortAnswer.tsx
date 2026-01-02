@@ -12,7 +12,7 @@ function ShortAnswer({ question }: ShortAnswerProps) {
     <div>
       <input
         type="text"
-        value={question.submittedAnswer ?? ""}
+        value={question.submittedAnswer[0] ?? ""}
         placeholder="정답을 입력해 주세요."
         className={cn(
           EXAM_QUESTION_SHORT_ANSWER_STYLE_MAP.base,

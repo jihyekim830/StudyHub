@@ -16,7 +16,8 @@ function ExamResult() {
   const params = useParams();
   const submissionId = Number(params?.submissionId);
   const { data: exam, isLoading, isError, error } = useExamResult(submissionId);
-  const headerSubText = `총 문항 수: ${exam?.questions.length}ㆍ부정행위: ${exam?.cheatingCount}회ㆍ응시시간: ${exam?.duration.split(":")[1]}분ㆍ응시 결과 점수: ${exam?.score}점/${exam?.totalScore}점`;
+  const maxScore = exam?.questions.reduce((sum, { point }) => sum + point, 0);
+  const resultSummaryText = `총 문항 수: ${exam?.questions.length}ㆍ부정행위: ${exam?.cheatingCount}회ㆍ응시시간: ${exam?.elapsedTime.split(":")[1]}분ㆍ응시 결과 점수: ${exam?.totalScore}점/${maxScore}점`;
 
   if (isLoading)
     return <LoadingUi className="mx-auto mt-96 flex w-full justify-center" />;
@@ -25,7 +26,10 @@ function ExamResult() {
   return (
     <>
       <ExamHeaderContainer>
-        <ExamHeaderTitle title="TypeScript 쪽지시험" subText={headerSubText} />
+        <ExamHeaderTitle
+          title="TypeScript 쪽지시험"
+          subText={resultSummaryText}
+        />
       </ExamHeaderContainer>
       <main>
         <div className="bg-primary-100 mt-32 h-29.5 py-7">
@@ -41,7 +45,7 @@ function ExamResult() {
         </div>
         <ExamContentContainer>
           {exam?.questions.map((question) => (
-            <ExamQuestionResult key={question.questionId} question={question} />
+            <ExamQuestionResult key={question.id} question={question} />
           ))}
         </ExamContentContainer>
         <ExamBottomButton type="link" label="완료" to="/my-page/exams" />

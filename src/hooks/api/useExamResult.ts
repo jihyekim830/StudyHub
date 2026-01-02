@@ -41,28 +41,36 @@ export default useExamResult;
 const convertExamResult = (
   data: ExamResultResponseDto
 ): ExamResultResponse => ({
-  examTitle: data.exam_title,
-  thumbnailImgUrl: data.thumbnail_img_url,
-  duration: data.duration,
-  score: data.score,
-  totalScore: data.total_score,
-  cheatingCount: data.cheating_count,
+  id: data.id,
+  submitterId: data.submitter_id,
+  deploymentId: data.deployment_id,
+  exam: {
+    id: data.exam.id,
+    title: data.exam.title,
+    thumbnailImgUrl: data.exam.thumbnail_img_url,
+  },
   questions: convertQuestionList(data.questions),
+  cheatingCount: data.cheating_count,
+  totalScore: data.total_score,
+  correctAnswerCount: data.correct_answer_count,
+  elapsedTime: data.elapsed_time,
+  startedAt: data.started_at,
+  submittedAt: data.submitted_at,
 });
 
 const convertQuestionList = (
   questionList: QuestionResultDto[]
 ): QuestionResult[] =>
   questionList.map((question) => ({
-    questionId: question.question_id,
-    number: question.number,
-    type: EXAM_QUESTION_TYPE_DTO_TO_MODEL_MAP[question.type],
+    id: question.id,
     question: question.question,
-    point: question.point,
     prompt: question.prompt,
+    blankCount: question.blank_count,
     options: question.options,
-    submittedAnswer: question.submitted_answer,
-    correctAnswer: question.correct_answer,
-    isCorrect: question.is_correct,
+    type: EXAM_QUESTION_TYPE_DTO_TO_MODEL_MAP[question.type],
+    answer: question.answer,
+    point: question.point,
     explanation: question.explanation,
+    isCorrect: question.is_correct,
+    submittedAnswer: question.submitted_answer,
   }));

@@ -13,7 +13,7 @@ function ExamQuestionResult({ question }: ExamQuestionResultProps) {
   return (
     <li>
       <QuestionHeader
-        questionNumber={question.number}
+        questionNumber={question.id}
         question={question.question}
         point={question.point}
         type={question.type}

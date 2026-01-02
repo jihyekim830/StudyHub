@@ -18,7 +18,6 @@ import type {
   Answer,
   QuestionResultDto,
   QuestionResult,
-  ResultAnswerValue,
   ExamQuestionResultContentComponent,
 } from "@/types/exam-types";
 
@@ -46,6 +45,5 @@ export type {
   Answer,
   QuestionResultDto,
   QuestionResult,
-  ResultAnswerValue,
   ExamQuestionResultContentComponent,
 };

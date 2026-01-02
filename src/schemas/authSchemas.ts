@@ -31,6 +31,10 @@ export const SMSVerificationSchema = z.object({
   smsToken: z.string().optional(),
 });
 
+export const FindEmailSchema = SMSVerificationSchema.extend({
+  name: z.string().min(1, { message: "이름을 입력해주세요." }),
+});
+
 export const PasswordSchema = z
   .string()
   .min(8, { message: "비밀번호는 8자 이상이어야 합니다." })
@@ -89,3 +93,4 @@ export type EmailVerificationSchemaType = z.infer<
 >;
 export type SMSVerificationSchemaType = z.infer<typeof SMSVerificationSchema>;
 export type ChangePasswordSchema = z.infer<typeof ChangePasswordSchema>;
+export type FindEmailSchemaType = z.infer<typeof FindEmailSchema>;

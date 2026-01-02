@@ -11,28 +11,28 @@ function SingleChoice({ question }: SingleChoiceProps) {
   return (
     <div>
       <div className="flex flex-col gap-3">
-        {question.options?.map((option) => (
+        {question.options.map((option, index) => (
           <label
-            key={`${question.questionId}-${option}`}
+            key={`${question.id}-option-${index}`}
             className="flex items-center gap-3"
           >
             <input
               type="radio"
-              name={`${question.questionId}-${question.number}`}
+              name={`${question.id}-radio`}
               className={cn(
                 EXAM_QUESTION_RADIO_STYLE_MAP.base,
                 EXAM_QUESTION_RADIO_STYLE_MAP.checked,
                 EXAM_QUESTION_RADIO_STYLE_MAP.focus
               )}
-              checked={option === question.submittedAnswer}
+              checked={option === question.submittedAnswer[0]}
               disabled
             />
             <span
               className={cn({
-                "text-green-500": option === question.correctAnswer,
+                "text-green-500": option === question.answer[0],
                 "text-red-600":
-                  option === question.submittedAnswer &&
-                  option !== question.correctAnswer,
+                  option === question.submittedAnswer[0] &&
+                  option !== question.answer[0],
               })}
             >
               {option}

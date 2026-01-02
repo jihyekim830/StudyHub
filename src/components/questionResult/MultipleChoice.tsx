@@ -12,14 +12,14 @@ function MultipleChoice({ question }: MultipleChoiceProps) {
   return (
     <div>
       <div className="flex flex-col gap-3">
-        {question.options?.map((option) => (
+        {question.options.map((option) => (
           <label
-            key={`${question.questionId}-${option}`}
+            key={`${question.id}-${option}`}
             className="relative flex items-center gap-3"
           >
             <input
               type="checkbox"
-              checked={question.submittedAnswer?.includes(option)}
+              checked={question.submittedAnswer.includes(option)}
               className={cn(
                 EXAM_QUESTION_CHECKBOX_STYLE_MAP.base,
                 EXAM_QUESTION_CHECKBOX_STYLE_MAP.checked,
@@ -37,10 +37,10 @@ function MultipleChoice({ question }: MultipleChoiceProps) {
             />
             <span
               className={cn({
-                "text-green-500": question.correctAnswer.includes(option),
+                "text-green-500": question.answer.includes(option),
                 "text-red-600":
-                  question.submittedAnswer?.includes(option) &&
-                  !question.correctAnswer.includes(option),
+                  question.submittedAnswer.includes(option) &&
+                  !question.answer.includes(option),
               })}
             >
               {option}

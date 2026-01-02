@@ -73,21 +73,37 @@ export interface ExamSubmitResponse {
 }
 
 export interface ExamResultResponseDto {
-  exam_title: string;
-  thumbnail_img_url: string;
-  duration: string;
-  score: number;
-  total_score: number;
-  cheating_count: number;
+  id: number;
+  submitter_id: number;
+  deployment_id: number;
+  exam: {
+    id: number;
+    title: string;
+    thumbnail_img_url: string;
+  };
   questions: QuestionResultDto[];
+  cheating_count: number;
+  total_score: number;
+  correct_answer_count: number;
+  elapsed_time: string;
+  started_at: string;
+  submitted_at: string;
 }
 
 export interface ExamResultResponse {
-  examTitle: string;
-  thumbnailImgUrl: string;
-  duration: string;
-  score: number;
-  totalScore: number;
-  cheatingCount: number;
+  id: number;
+  submitterId: number;
+  deploymentId: number;
+  exam: {
+    id: number;
+    title: string;
+    thumbnailImgUrl: string;
+  };
   questions: QuestionResult[];
+  cheatingCount: number;
+  totalScore: number;
+  correctAnswerCount: number;
+  elapsedTime: string;
+  startedAt: string;
+  submittedAt: string;
 }
