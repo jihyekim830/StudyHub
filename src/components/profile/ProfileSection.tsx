@@ -51,7 +51,7 @@ export default function ProfileSection() {
           alt="프로필 이미지"
           width={184}
           height={184}
-          className="w-full max-w-44"
+          className="aspect-square h-full max-h-44 w-full max-w-44 rounded-full object-cover object-center"
           onError={() => {
             setImageError(true);
           }}

@@ -26,9 +26,8 @@ export default function Header() {
                   <img src={HeaderLogo} alt="헤더로고" />
                 </div>
               </Link>
-
-              <HeaderLink to="/community">커뮤니티</HeaderLink>
-              <HeaderLink to="/qna">질의응답</HeaderLink>
+              <a href="https://community.ozcodingschool.site">커뮤니티</a>
+              <a href="https://qna.ozcodingschool.site">질의응답</a>
             </nav>
           </div>
 

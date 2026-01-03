@@ -35,6 +35,21 @@ export const FindEmailSchema = SMSVerificationSchema.extend({
   name: z.string().min(1, { message: "이름을 입력해주세요." }),
 });
 
+export const NicknameSchema = z
+  .string()
+  .min(2, { message: "닉네임은 2자 이상 입력해주세요." })
+  .max(10, { message: "닉네임은 10자 이내여야 합니다." })
+  .regex(
+    /[a-zA-Z0-9가-힣]+$/,
+    "특수문자를 제외한 한글, 영문, 숫자만 사용 가능합니다."
+  );
+
+export const BirthdaySchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
+  message: "생년월일은 YYYY-MM-DD 형식으로 입력해주세요.",
+});
+
+export const GenderSchema = z.enum(["M", "F"]);
+
 export const PasswordSchema = z
   .string()
   .min(8, { message: "비밀번호는 8자 이상이어야 합니다." })
@@ -65,18 +80,9 @@ export const SignupSchema = z
     email: emailPart,
     password: PasswordSchema,
     passwordConfirm: PasswordConfirmSchema,
-    nickname: z
-      .string()
-      .min(2, { message: "닉네임은 2자 이상 입력해주세요." })
-      .max(10, { message: "닉네임은 10자 이내여야 합니다." })
-      .regex(
-        /[a-zA-Z0-9가-힣]+$/,
-        "특수문자를 제외한 한글, 영문, 숫자만 사용 가능합니다."
-      ),
-    birthday: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, {
-      message: "생년월일은 YYYY-MM-DD 형식으로 입력해주세요.",
-    }),
-    gender: z.enum(["M", "F"]),
+    nickname: NicknameSchema,
+    birthday: BirthdaySchema,
+    gender: GenderSchema,
     ...phoneParts,
     emailToken: z.string().min(1, "이메일 인증이 필요합니다."),
     smsToken: z.string().min(1, "휴대폰 인증이 필요합니다."),
@@ -86,6 +92,14 @@ export const SignupSchema = z
     path: ["passwordConfirm"],
   });
 
+export const EditProfileSchema = z.object({
+  name: z.string().min(1, { message: "이름을 입력해주세요." }),
+  nickname: NicknameSchema,
+  birthday: BirthdaySchema,
+  gender: GenderSchema,
+});
+
+export type EditProfileSchemaType = z.infer<typeof EditProfileSchema>;
 export type LoginSchemaType = z.infer<typeof LoginSchema>;
 export type SignupSchemaType = z.infer<typeof SignupSchema>;
 export type EmailVerificationSchemaType = z.infer<

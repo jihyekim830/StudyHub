@@ -56,3 +56,16 @@ export const findUserEmail = async (data: {
 
   return { maskedEmail };
 };
+
+export const changeProfileImage = async (image: File) => {
+  const imageForm = new FormData();
+
+  imageForm.append("image", image);
+
+  api.patch(`${API_BASE_URL}${API_PATHS.accounts.profileImage}`, imageForm, {
+    withCredentials: true,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

@@ -7,6 +7,7 @@ import TakeExam from "@/pages/TakeExam";
 import ChangePasswordPage from "@/pages/ChangePasswordPage";
 import ExamResult from "@/pages/ExamResult";
 import MyPage from "@/pages/MyPage";
+import MyPageEdit from "@/pages/MyPageEdit";
 
 export {
   Home,
@@ -18,4 +19,5 @@ export {
   ChangePasswordPage,
   ExamResult,
   MyPage,
+  MyPageEdit,
 };

@@ -56,5 +56,5 @@ export function creatProfileImageUrl(
 ) {
   const s3Domain = import.meta.env.VITE_S3_DOMAIN_URL;
 
-  return `${s3Domain}/uploads/images/user_profile/${userId}/profile${size}.png`;
+  return `${s3Domain}/uploads/images/user_profiles/${userId}/profile${size}.png`;
 }

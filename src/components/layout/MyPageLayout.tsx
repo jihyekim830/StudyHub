@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation } from "react-router";
 
 const EXAM_PATH = "/my-page/exams";
 const PROFILE_PATH = "/my-page";
+const PROFILE_EDIT_PATH = "/my-page/edit";
 const CHANGE_PASSWORD_PATH = "/my-page/change-password";
 
 export default function MyPageLayout() {
@@ -22,7 +23,9 @@ export default function MyPageLayout() {
           <SideBarTapButton
             as={Link}
             to={PROFILE_PATH}
-            isActive={pathname === PROFILE_PATH}
+            isActive={
+              pathname === PROFILE_PATH || pathname === PROFILE_EDIT_PATH
+            }
           >
             마이페이지
           </SideBarTapButton>

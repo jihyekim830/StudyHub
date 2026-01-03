@@ -16,6 +16,7 @@ import useChangePassword from "@/hooks/api/useChangePassword";
 import useExamResult from "@/hooks/api/useExamResult";
 import useUserInformation from "@/hooks/api/useUserInformation";
 import useEnrolledCourses from "@/hooks/api/useEnrolledCourses";
+import useEditProfile from "@/hooks/api/useEditProfile";
 
 export {
   useExamList,
@@ -36,4 +37,5 @@ export {
   useExamResult,
   useUserInformation,
   useEnrolledCourses,
+  useEditProfile,
 };
