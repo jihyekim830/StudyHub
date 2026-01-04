@@ -46,7 +46,11 @@ function ExamList({ exams }: ExamListProps) {
                   {isDone ? "응시완료" : "미응시"}
                 </div>
               </div>
-              <span className="text-sm">{`${exam.subject.title} ㆍ ${examInfo.score ?? 0}점/${totalScore}점 ㆍ ${examInfo.correctAnswerCount ?? 0}/${questionCount}개 정답`}</span>
+              {isDone ? (
+                <span className="text-sm">{`${exam.subject.title} ㆍ ${examInfo.score ?? 0}점/${totalScore}점 ㆍ ${examInfo.correctAnswerCount ?? 0}/${questionCount}개 정답`}</span>
+              ) : (
+                <span>{`${exam.subject.title} ㆍ 응시하고 점수를 확인해보세요!`}</span>
+              )}
             </div>
             {isDone ? (
               <LinkButton

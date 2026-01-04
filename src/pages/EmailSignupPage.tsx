@@ -128,9 +128,9 @@ export default function EmailSignupPage() {
             </div>
           </section>
 
-          <EmailVerification onVerify={setIsEmailVerified} />
+          <EmailVerification onVerify={setIsEmailVerified} purpose="signup" />
 
-          <SMSVerification onVerify={setIsSmsVerified} />
+          <SMSVerification onVerify={setIsSmsVerified} purpose="signup" />
 
           <section>
             <div className="flex flex-col gap-2">

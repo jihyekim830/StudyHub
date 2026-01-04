@@ -101,7 +101,7 @@ export default function FindEmailModal({ onClose }: FindEmailModalProps) {
                 />
               </div>
 
-              <SMSVerification onVerify={handleSMSVerify} />
+              <SMSVerification onVerify={handleSMSVerify} purpose="find" />
 
               <Button
                 type="button"

@@ -31,7 +31,10 @@ const getExamListResponse = (page: number): ExamListResponseDto => {
 
   return {
     page,
-    has_next: page < LAST_PAGE,
+    size: PAGE_SIZE,
+    count: results.length,
+    previous: page === 1 ? false : true,
+    next: page < LAST_PAGE,
     results,
   };
 };

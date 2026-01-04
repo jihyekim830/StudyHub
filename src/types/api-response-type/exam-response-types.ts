@@ -8,17 +8,18 @@ import type {
   QuestionResultDto,
 } from "@/types";
 
-export interface ExamListResponseDto {
+interface ExamListResponseBase<TExam> {
   page: number;
-  has_next: boolean;
-  results: ExamDto[];
+  size: number;
+  count: number;
+  previous: boolean | null;
+  next: boolean | null;
+  results: TExam[];
 }
 
-export interface ExamListResponse {
-  page: number;
-  hasNext: boolean;
-  results: Exam[];
-}
+export type ExamListResponseDto = ExamListResponseBase<ExamDto>;
+
+export type ExamListResponse = ExamListResponseBase<Exam>;
 
 export interface ExamQuestionListResponseDto {
   exam_id: number;

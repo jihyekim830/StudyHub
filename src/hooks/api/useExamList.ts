@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-query";
 import { getExamList } from "@/api/exams";
 import type { AxiosError } from "axios";
-import type { Exam, ExamDto } from "@/types";
+import type { Exam, ExamDto, ExamStatus } from "@/types";
 
 type ExamListQueryOptions = Omit<
   UseInfiniteQueryOptions<
@@ -20,13 +20,13 @@ type ExamListQueryOptions = Omit<
   "queryKey" | "queryFn" | "initialPageParam" | "getNextPageParam" | "select"
 >;
 
-function useExamList(options?: ExamListQueryOptions) {
+function useExamList(status: ExamStatus, options?: ExamListQueryOptions) {
   return useInfiniteQuery({
-    queryKey: ["exams", "list"] as const,
-    queryFn: ({ pageParam }) => getExamList(pageParam as number),
+    queryKey: ["exams", "list", status] as const,
+    queryFn: ({ pageParam }) => getExamList(pageParam as number, status),
     initialPageParam: 1,
     getNextPageParam: (lastPage) =>
-      lastPage.has_next ? lastPage.page + 1 : undefined,
+      lastPage.next ? lastPage.page + 1 : undefined,
     select: convertExamList,
     ...options,
   });
@@ -38,8 +38,7 @@ const convertExamList = (
   data: InfiniteData<ExamListResponseDto>
 ): InfiniteData<ExamListResponse> => ({
   pages: data.pages.map((item) => ({
-    page: item.page,
-    hasNext: item.has_next,
+    ...item,
     results: item.results.map(convertExam),
   })),
   pageParams: data.pageParams,

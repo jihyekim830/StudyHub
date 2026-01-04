@@ -6,12 +6,13 @@ import type { AxiosError } from "axios";
 import type {
   SMSVerifyServerResponse,
   SMSVerifyResponse,
+  SignupErrorResponse,
 } from "@/types/api-response-type/auth-response-type";
 
 type VerifySMSMutationOptions = Omit<
   UseMutationOptions<
     SMSVerifyResponse,
-    AxiosError,
+    AxiosError<SignupErrorResponse>,
     { phoneNumber: string; code: string }
   >,
   "mutateFn"

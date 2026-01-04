@@ -1,5 +1,7 @@
 import { API_PATHS, MSW_BASE_URL } from "@/constants";
+import { API_BASE_URL } from "@/constants/api-paths";
 import { api } from "@/lib";
+import type { ExamStatus } from "@/types";
 import type { ExamSubmitRequest } from "@/types/api-request-type/exam-request-types";
 import type {
   ExamCheatingResponseDto,
@@ -20,10 +22,12 @@ export const checkExamCode = (
   );
 
 export const getExamList = async (
-  page: number = 1
+  page: number,
+  status: ExamStatus
 ): Promise<ExamListResponseDto> => {
   const response = await api.get(
-    `${MSW_BASE_URL}${API_PATHS.exams.deployments.list(page)}`
+    `${API_BASE_URL}${API_PATHS.exams.deployments.base}`,
+    { params: { page, status } }
   );
 
   return response.data;

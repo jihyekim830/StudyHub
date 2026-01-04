@@ -6,12 +6,13 @@ import type { AxiosError } from "axios";
 import type {
   EmailVerifyServerResponse,
   EmailVerifyResponse,
+  SignupErrorResponse,
 } from "@/types/api-response-type/auth-response-type";
 
 type VerifyEmailMutationOptions = Omit<
   UseMutationOptions<
     EmailVerifyResponse,
-    AxiosError,
+    AxiosError<SignupErrorResponse>,
     { email: string; code: string }
   >,
   "mutateFn"

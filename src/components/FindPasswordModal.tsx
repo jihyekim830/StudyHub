@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -53,6 +53,16 @@ export default function FindPasswordModal({ onClose }: FindPasswordModalProps) {
       );
     },
   });
+
+  useEffect(() => {
+    if (step === 3) {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [step, onClose]);
 
   const onValidSubmit = (data: FindPasswordType) => {
     if (!emailToken) return;

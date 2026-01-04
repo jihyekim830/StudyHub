@@ -7,9 +7,13 @@ import { useToast } from "@/hooks";
 
 interface SMSVerificationProps {
   onVerify: (status: boolean) => void;
+  purpose: "signup" | "find" | "restore";
 }
 
-export default function SMSVerification({ onVerify }: SMSVerificationProps) {
+export default function SMSVerification({
+  onVerify,
+  purpose,
+}: SMSVerificationProps) {
   const {
     register,
     watch,
@@ -19,7 +23,6 @@ export default function SMSVerification({ onVerify }: SMSVerificationProps) {
   } = useFormContext<SMSVerificationSchemaType>();
 
   const [isSMSSent, setIsSMSSent] = useState(false);
-
   const [isVerified, setIsVerified] = useState(false);
 
   const { triggerToast } = useToast();
@@ -56,9 +59,20 @@ export default function SMSVerification({ onVerify }: SMSVerificationProps) {
         variant: "small",
       });
     },
-    onError: () => {
+    onError: (error) => {
+      const errorData = error.response?.data;
+
+      const fieldErrors = errorData?.errors
+        ? Object.values(errorData.errors).flat()[0]
+        : null;
+
+      const serverMessage =
+        fieldErrors ||
+        errorData?.error_detail ||
+        "인증번호 전송에 실패했습니다.";
+
       triggerToast({
-        text: "인증번호 전송에 실패했습니다.",
+        text: serverMessage,
         status: "danger",
         variant: "small",
       });
@@ -76,12 +90,15 @@ export default function SMSVerification({ onVerify }: SMSVerificationProps) {
         variant: "small",
       });
     },
-    onError: () => {
+    onError: (error) => {
       setValue("smscode", "");
       setIsVerified(false);
       onVerify(false);
+
+      const serverMessage =
+        error.response?.data?.error_detail || "인증번호가 일치하지 않습니다.";
       triggerToast({
-        text: "인증번호가 일치하지 않습니다.",
+        text: serverMessage,
         status: "danger",
         variant: "small",
       });
@@ -90,7 +107,7 @@ export default function SMSVerification({ onVerify }: SMSVerificationProps) {
 
   const handleSendCode = () => {
     if (fullPhoneNumber.length >= 10) {
-      sendSMS({ phoneNumber: fullPhoneNumber });
+      sendSMS({ phoneNumber: fullPhoneNumber, purpose: purpose });
     }
   };
 

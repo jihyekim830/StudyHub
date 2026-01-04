@@ -20,7 +20,7 @@ export interface ExamDto {
   question_count: number;
   total_score: number;
   exam_info: {
-    status: string;
+    status: ExamStatus;
     score: number | null;
     correct_answer_count: number | null;
   };
@@ -44,7 +44,7 @@ export interface Exam {
   questionCount: number;
   totalScore: number;
   examInfo: {
-    status: string;
+    status: ExamStatus;
     score: number | null;
     correctAnswerCount: number | null;
   };
