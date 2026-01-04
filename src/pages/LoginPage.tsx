@@ -8,12 +8,17 @@ import HeaderLogo from "@/assets/images/logo-images/header-logo.svg";
 import { KakaoLoginButton, NaverLoginButton } from "@/components/auth";
 import { useLoginMutation } from "@/hooks/useLogin";
 import { useExternalModalController } from "@/hooks";
-import { AccountRestoreModal, FindEmailModal } from "@/components";
+import {
+  AccountRestoreModal,
+  FindEmailModal,
+  FindPasswordModal,
+} from "@/components";
 import { Modal, ModalContent } from "@/components/common/modal";
 
 export default function LoginPage() {
   const accountRestoreModalControl = useExternalModalController();
   const findEmailModalControl = useExternalModalController();
+  const findPasswordModalControl = useExternalModalController();
 
   const [expiredDate, setExpiredDate] = useState<Date>();
 
@@ -58,6 +63,11 @@ export default function LoginPage() {
       <Modal externalModalControl={findEmailModalControl}>
         <ModalContent title="아이디 찾기" className="w-120 max-w-md">
           <FindEmailModal onClose={findEmailModalControl.close} />
+        </ModalContent>
+      </Modal>
+      <Modal externalModalControl={findPasswordModalControl}>
+        <ModalContent title="비밀번호 찾기" className="w-120 max-w-md">
+          <FindPasswordModal onClose={findPasswordModalControl.close} />
         </ModalContent>
       </Modal>
 
@@ -113,7 +123,11 @@ export default function LoginPage() {
                 아이디 찾기
               </button>
               <span className="px-2">|</span>
-              <button type="button" className="hover:text-neutral-800">
+              <button
+                type="button"
+                className="hover:text-neutral-800"
+                onClick={findPasswordModalControl.open}
+              >
                 비밀번호 찾기
               </button>
             </div>

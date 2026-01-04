@@ -107,7 +107,7 @@ export default function FindEmailModal({ onClose }: FindEmailModalProps) {
                 type="button"
                 onClick={handleSubmit(onValidSubmit)}
                 disabled={!watchedName.trim() || !isSMSVerified || isPending}
-                className="mt-2 w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-300"
+                className="mt-2 w-full"
               >
                 {isPending ? "찾는 중..." : "아이디 찾기"}
               </Button>
@@ -139,7 +139,7 @@ export default function FindEmailModal({ onClose }: FindEmailModalProps) {
               <Button variant="outline" onClick={onClose} className="flex-1">
                 로그인
               </Button>
-              <Button onClick={onClose} className="flex-1 bg-purple-600">
+              <Button onClick={onClose} className="flex-1">
                 비밀번호 찾기
               </Button>
             </div>

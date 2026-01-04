@@ -7,11 +7,13 @@ import { useToast } from "@/hooks";
 import { extractErrorMessage } from "@/lib/authUtils";
 
 interface EmailVerificationProps {
-  onVerify: (status: boolean) => void;
+  onVerify: (status: boolean, token?: string) => void;
+  purpose: "signup" | "find" | "restore";
 }
 
 export default function EmailVerification({
   onVerify,
+  purpose,
 }: EmailVerificationProps) {
   const {
     register,
@@ -58,7 +60,7 @@ export default function EmailVerification({
   const { mutate: verifyEmail, isPending: isVerifying } = useVerifyEmail({
     onSuccess: (data) => {
       setIsVerified(true);
-      onVerify(true);
+      onVerify(true, data.emailToken);
       setValue("emailToken", data.emailToken, { shouldValidate: true });
       triggerToast({
         text: "이메일 인증이 완료되었습니다.",
@@ -80,7 +82,10 @@ export default function EmailVerification({
 
   const handleSendCode = () => {
     if (emailValue && !errors.email) {
-      sendEmail({ email: emailValue });
+      sendEmail({
+        email: emailValue,
+        purpose: purpose,
+      });
       setValue("emailcode", "");
       setFocus("emailcode");
     }
@@ -99,7 +104,7 @@ export default function EmailVerification({
           이메일<span className="text-red-500">*</span>
         </label>
         <span className="ml-2 text-xs font-bold text-violet-600">
-          로그인 시 아이디로 사용합니다.
+          {purpose === "signup" ? "로그인 시 아이디로 사용합니다." : ""}
         </span>
       </div>
 

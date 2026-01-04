@@ -2,21 +2,25 @@ import { useMutation, type UseMutationOptions } from "@tanstack/react-query";
 import { findUserEmail } from "@/api/auth";
 import type { AxiosError } from "axios";
 
-interface FindIdRequest {
+interface FindEmailRequest {
   name: string;
   smsToken: string;
 }
 
-interface FindIdResponse {
+interface FindEmailResponse {
   maskedEmail: string;
 }
 
-interface FindIdError {
+interface FindEmailError {
   error_detail?: string;
 }
 
 type UseFindEmailOptions = Omit<
-  UseMutationOptions<FindIdResponse, AxiosError<FindIdError>, FindIdRequest>,
+  UseMutationOptions<
+    FindEmailResponse,
+    AxiosError<FindEmailError>,
+    FindEmailRequest
+  >,
   "mutationFn"
 >;
 

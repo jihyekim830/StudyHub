@@ -20,6 +20,7 @@ import ExamBottomButton from "@/components/ExamBottomButton";
 import QuestionHeader from "@/components/QuestionHeader";
 import ExamQuestionResult from "@/components/questionResult/ExamQuestionResult";
 import FindEmailModal from "@/components/FindEmailModal";
+import FindPasswordModal from "@/components/FindPasswordModal";
 
 export {
   Footer,
@@ -44,4 +45,5 @@ export {
   QuestionHeader,
   ExamQuestionResult,
   FindEmailModal,
+  FindPasswordModal,
 };

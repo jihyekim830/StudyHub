@@ -69,3 +69,18 @@ export const changeProfileImage = async (image: File) => {
     },
   });
 };
+
+export const findUserPassword = async (data: {
+  emailToken: string;
+  newPassword: string;
+}): Promise<{ detail: string }> => {
+  const response = await api.post(
+    `${API_BASE_URL}${API_PATHS.accounts.findPassword}`,
+    {
+      email_token: data.emailToken,
+      new_password: data.newPassword,
+    }
+  );
+
+  return response.data;
+};

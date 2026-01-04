@@ -59,7 +59,7 @@ export const PasswordSchema = z
 
 export const PasswordConfirmSchema = z
   .string()
-  .min(1, { message: "비밀번호 확인을 입력해주세요." });
+  .min(1, { message: "비밀번호를 다시 입력해주세요." });
 
 export const ChangePasswordSchema = z
   .object({
@@ -100,6 +100,18 @@ export const EditProfileSchema = z.object({
 });
 
 export type EditProfileSchemaType = z.infer<typeof EditProfileSchema>;
+
+export const FindPasswordSchema = z
+  .object({
+    password: PasswordSchema,
+    passwordConfirm: PasswordConfirmSchema,
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: "비밀번호가 일치하지 않습니다.",
+    path: ["passwordConfirm"],
+  });
+
+export type FindPasswordType = z.infer<typeof FindPasswordSchema>;
 export type LoginSchemaType = z.infer<typeof LoginSchema>;
 export type SignupSchemaType = z.infer<typeof SignupSchema>;
 export type EmailVerificationSchemaType = z.infer<

@@ -5,11 +5,16 @@ import { useMutation, type UseMutationOptions } from "@tanstack/react-query";
 import type { AxiosError } from "axios";
 import type { SignupErrorResponse } from "@/types/api-response-type/auth-response-type";
 
+export interface SendEmailRequest {
+  email: string;
+  purpose?: "signup" | "find" | "restore";
+}
+
 type SendEmailMutationOptons = Omit<
   UseMutationOptions<
     unknown,
     AxiosError<SignupErrorResponse>,
-    { email: string }
+    SendEmailRequest
   >,
   "mutateFn"
 >;
@@ -18,13 +23,14 @@ export default function useSendEmail(options?: SendEmailMutationOptons) {
   return useMutation<
     unknown,
     AxiosError<SignupErrorResponse>,
-    { email: string }
+    SendEmailRequest
   >({
-    mutationFn: async ({ email }) => {
+    mutationFn: async ({ email, purpose = "restore" }) => {
       await api.post(
         `${API_BASE_URL}${API_PATHS.accounts.verification.sendEmail}`,
         {
           email,
+          purpose,
         }
       );
     },
