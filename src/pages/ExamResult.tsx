@@ -27,7 +27,7 @@ function ExamResult() {
     <>
       <ExamHeaderContainer>
         <ExamHeaderTitle
-          title="TypeScript 쪽지시험"
+          title={exam?.exam.title ?? "쪽지시험"}
           subText={resultSummaryText}
         />
       </ExamHeaderContainer>
