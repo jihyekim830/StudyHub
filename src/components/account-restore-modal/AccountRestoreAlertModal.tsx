@@ -12,12 +12,7 @@ interface AccountRestoreAlertModalProps {
 export default function AccountRestoreAlertModal({
   externalModalControl,
   setStep,
-  expiredAt,
 }: AccountRestoreAlertModalProps) {
-  const expiredYear = expiredAt.getFullYear();
-  const expiredMonth = expiredAt.getMonth();
-  const expiredDate = expiredAt.getDate();
-
   return (
     <Modal externalModalControl={externalModalControl}>
       <ModalContent className="flex flex-col gap-10">
@@ -27,7 +22,6 @@ export default function AccountRestoreAlertModal({
             해당 계정은 탈퇴된 상태에요.
           </span>
           <div className="flex flex-col items-center text-neutral-400">
-            <span>{`${expiredYear}년 ${expiredMonth}월 ${expiredDate}일 이후, 계정 정보는 완전히 삭제돼요.`}</span>
             <span>
               계정을 다시 사용하려면 아래 버튼을 눌러 복구를 진행해주세요.
             </span>

@@ -84,3 +84,10 @@ export const findUserPassword = async (data: {
 
   return response.data;
 };
+
+export const logoutUser = async (): Promise<{ detail: string }> => {
+  const response = await api.post(
+    `${API_BASE_URL}${API_PATHS.accounts.logout}`
+  );
+  return response.data;
+};

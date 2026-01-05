@@ -17,6 +17,7 @@ import useExamResult from "@/hooks/api/useExamResult";
 import useUserInformation from "@/hooks/api/useUserInformation";
 import useEnrolledCourses from "@/hooks/api/useEnrolledCourses";
 import useEditProfile from "@/hooks/api/useEditProfile";
+import useRestoreAccount from "@/hooks/api/useRestoreAccount";
 
 export {
   useExamList,
@@ -38,4 +39,5 @@ export {
   useUserInformation,
   useEnrolledCourses,
   useEditProfile,
+  useRestoreAccount,
 };

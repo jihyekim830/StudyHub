@@ -2,6 +2,7 @@ import { useMutation, type UseMutationOptions } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useToast } from "@/hooks";
+import { logoutUser } from "@/api/auth";
 
 type UseLogoutOptions = Omit<
   UseMutationOptions<void, Error, void>,
@@ -16,6 +17,7 @@ export const useLogout = (options?: UseLogoutOptions) => {
   return useMutation({
     ...options,
     mutationFn: async () => {
+      await logoutUser();
       deleteAccessToken();
     },
     onSuccess: () => {
